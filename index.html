@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bella English Review Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <p class="badge">English time</p>
+        <h1>Bella English Review Game</h1>
+        <h2>贝拉英语复习小游戏</h2>
+      </div>
+
+      <div class="menu-grid">
+        <button class="menu-button coral" data-action="mixed">Mixed Review<br><span>综合复习</span></button>
+        <button class="menu-button sky" data-action="category">Category Review<br><span>分类复习</span></button>
+        <button class="menu-button lime" data-action="command">Parent Command<br><span>亲子指令</span></button>
+        <button class="menu-button violet" data-action="progress">Progress<br><span>学习进度</span></button>
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home">Home</button>
+        <div id="roundInfo" class="round-info">1 / 10</div>
+      </header>
+
+      <div class="quiz-card">
+        <p id="categoryLabel" class="category-label">Mixed Review</p>
+        <h2 id="questionWord" class="question-word">word</h2>
+        <button id="listenButton" class="listen-button">🔊 Listen</button>
+      </div>
+
+      <div id="optionsArea" class="options-area"></div>
+      <p id="feedback" class="feedback"></p>
+    </section>
+
+    <section id="categoryScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home">Home</button>
+        <h2>Category Review</h2>
+      </header>
+      <p class="page-note">Choose one category to practice.</p>
+      <div id="categoryButtons" class="category-grid"></div>
+    </section>
+
+    <section id="commandScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home">Back Home</button>
+      </header>
+
+      <div class="command-card">
+        <p class="category-label">Parent Command</p>
+        <h2 id="commandText">Run!</h2>
+        <button id="commandListenButton" class="listen-button">🔊 Listen</button>
+      </div>
+
+      <button id="nextCommandButton" class="primary-button">Next</button>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div class="result-card">
+        <p class="badge">Finished</p>
+        <h2>Great work!</h2>
+        <p id="scoreText" class="score-text">Score: 0 / 10</p>
+        <button class="primary-button" data-action="home">Back Home</button>
+      </div>
+    </section>
+
+    <section id="progressScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home">Home</button>
+        <h2>Progress</h2>
+      </header>
+
+      <div class="progress-card">
+        <p>总练习次数</p>
+        <strong id="totalSessions">0</strong>
+      </div>
+      <div class="progress-card">
+        <p>总答题数</p>
+        <strong id="totalQuestions">0</strong>
+      </div>
+      <div class="progress-card">
+        <p>总正确数</p>
+        <strong id="totalCorrect">0</strong>
+      </div>
+      <div class="progress-card">
+        <p>正确率</p>
+        <strong id="accuracyRate">0%</strong>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
