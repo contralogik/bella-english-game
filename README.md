@@ -23,6 +23,7 @@
 - Parent Command 亲子指令：随机显示英文动作指令，不判断对错。
 - Progress 学习进度：使用 `localStorage` 保存总练习次数、总答题数和总正确数。
 - 语音朗读：使用浏览器 `speechSynthesis`，语速为 0.8。
+- 答错会显示 `Try again!`，然后进入下一题；答错题目不会计入正确数。
 
 ## 放到 GitHub Pages
 

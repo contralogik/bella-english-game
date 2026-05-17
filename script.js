@@ -57,7 +57,10 @@ const vocabulary = [
     ["milk", "牛奶", "🥛"],
     ["bread", "面包", "🍞"],
     ["apple", "苹果", "🍎"],
-    ["banana", "香蕉", "🍌"]
+    ["banana", "香蕉", "🍌"],
+    ["noodles", "面条", "🍜"],
+    ["fruit", "水果", "🍇"],
+    ["rice", "米饭", "🍚"]
   ]),
   ...makeWords("Animals", [
     ["duck", "鸭子", "🦆"],
@@ -67,7 +70,9 @@ const vocabulary = [
     ["pig", "猪", "🐷"],
     ["bird", "鸟", "🐦"],
     ["fish", "鱼", "🐟"],
-    ["rabbit", "兔子", "🐰"]
+    ["rabbit", "兔子", "🐰"],
+    ["tiger", "老虎", "🐯"],
+    ["lion", "狮子", "🦁"]
   ]),
   ...makeWords("Temperature", [
     ["hot", "热的", "🔥"],
@@ -95,6 +100,9 @@ const vocabulary = [
     ["what", "什么", "❓"],
     ["where", "哪里", "📍"],
     ["why", "为什么", "🤔"],
+    ["who", "谁", "🧒"],
+    ["how many", "多少", "🔢"],
+    ["what do you like?", "你喜欢什么？", "💗"],
     ["there is", "有", "✅"],
     ["it is", "它是", "💬"]
   ]),
@@ -108,7 +116,9 @@ const vocabulary = [
     ["eat", "吃", "🍽️"],
     ["drink", "喝", "🥤"],
     ["sleep", "睡觉", "🛌"],
-    ["like", "喜欢", "💗"]
+    ["like", "喜欢", "💗"],
+    ["can", "能；会", "💪"],
+    ["help", "帮助", "🤝"]
   ]),
   ...makeWords("Position Words", [
     ["in", "在里面", "📥"],
@@ -118,7 +128,13 @@ const vocabulary = [
   ...makeWords("Adjectives", [
     ["delicious", "美味的", "😋"],
     ["beautiful", "漂亮的", "🌸"],
-    ["perfect", "完美的", "⭐"]
+    ["perfect", "完美的", "⭐"],
+    ["tall", "高的", "📏"],
+    ["short", "矮的；短的", "↕️"],
+    ["healthy", "健康的", "💪"]
+  ]),
+  ...makeWords("People", [
+    ["teacher", "老师", "👩‍🏫"]
   ]),
   ...makeWords("Daily Phrases", [
     ["Good morning", "早上好", "🌞"],
@@ -271,8 +287,9 @@ function checkAnswer(button, choice) {
     return;
   }
 
+  answered = true;
+
   if (choice.word === currentQuestion.word) {
-    answered = true;
     score += 1;
     button.classList.add("correct");
     feedback.textContent = "Good job!";
@@ -280,6 +297,7 @@ function checkAnswer(button, choice) {
   } else {
     button.classList.add("wrong");
     feedback.textContent = "Try again!";
+    setTimeout(nextQuestion, 850);
   }
 }
 
@@ -304,9 +322,10 @@ function buildCategoryButtons() {
   categoryButtons.innerHTML = "";
 
   categories.forEach((category) => {
+    const count = vocabulary.filter((item) => item.category === category).length;
     const button = document.createElement("button");
     button.className = "category-button";
-    button.textContent = category;
+    button.textContent = `${category} (${count})`;
     button.addEventListener("click", () => {
       startQuiz(vocabulary.filter((item) => item.category === category), category, "text");
     });
