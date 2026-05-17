@@ -96,6 +96,12 @@ const vocabulary = [
     ["my", "我的", "🤲"],
     ["your", "你的", "🫵"]
   ]),
+  ...makeWords("Family", [
+    ["mother", "妈妈", "👩"],
+    ["father", "爸爸", "👨"],
+    ["sister", "姐妹；姐姐；妹妹", "👧"],
+    ["brother", "兄弟；哥哥；弟弟", "👦"]
+  ]),
   ...makeWords("Questions", [
     ["what", "什么", "❓"],
     ["where", "哪里", "📍"],
