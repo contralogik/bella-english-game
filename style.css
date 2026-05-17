@@ -3,8 +3,8 @@
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
+  margin: 0;
   color: #243047;
   font-family: Arial, "Microsoft YaHei", sans-serif;
   background: linear-gradient(180deg, #fff7d8 0%, #d8f4ff 100%);
@@ -17,10 +17,10 @@ button {
 }
 
 .app {
-  width: min(100%, 520px);
+  width: min(100%, 540px);
   min-height: 100vh;
   margin: 0 auto;
-  padding: 20px;
+  padding: 18px;
 }
 
 .screen {
@@ -32,7 +32,7 @@ button {
 }
 
 .hero {
-  margin: 24px 0 26px;
+  margin: 20px 0 22px;
   padding: 24px 18px;
   text-align: center;
   background: #ffffff;
@@ -46,7 +46,7 @@ button {
   margin: 0 0 10px;
   padding: 6px 12px;
   color: #ffffff;
-  font-weight: 700;
+  font-weight: 800;
   background: #ff7a7a;
   border-radius: 999px;
 }
@@ -85,13 +85,13 @@ h1 {
   min-height: 58px;
   padding: 14px 16px;
   color: #243047;
-  font-weight: 800;
+  font-weight: 900;
   border-radius: 16px;
   box-shadow: 0 6px 0 rgba(35, 48, 71, 0.18);
 }
 
 .menu-button {
-  font-size: 1.12rem;
+  font-size: 1.08rem;
   text-align: left;
 }
 
@@ -99,7 +99,7 @@ h1 {
   display: inline-block;
   margin-top: 4px;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
   opacity: 0.78;
 }
 
@@ -109,6 +109,10 @@ h1 {
 
 .sky {
   background: #91dcff;
+}
+
+.mint {
+  background: #9ee8cc;
 }
 
 .lime {
@@ -140,7 +144,7 @@ h1 {
 
 .round-info {
   padding: 10px 14px;
-  font-weight: 800;
+  font-weight: 900;
   background: #ffffff;
   border-radius: 999px;
 }
@@ -161,13 +165,13 @@ h1 {
 .page-note {
   margin-bottom: 12px;
   color: #60708c;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .question-word,
 #commandText {
   margin-bottom: 18px;
-  font-size: clamp(2.4rem, 12vw, 4.2rem);
+  font-size: clamp(2.25rem, 11vw, 4rem);
   line-height: 1.05;
   color: #243047;
 }
@@ -180,9 +184,27 @@ h1 {
 .option-button {
   width: 100%;
   min-height: 66px;
-  font-size: 1.18rem;
+  font-size: 1.12rem;
   background: #ffffff;
   border: 3px solid #d6e6ff;
+}
+
+.picture-button {
+  min-height: 126px;
+  padding: 12px;
+}
+
+.picture-symbol {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 3.1rem;
+  line-height: 1;
+}
+
+.picture-label {
+  display: block;
+  color: #53607a;
+  font-size: 0.96rem;
 }
 
 .option-button.correct {
@@ -232,7 +254,7 @@ h1 {
 .progress-card p {
   margin: 0;
   color: #60708c;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .progress-card strong {
@@ -244,5 +266,9 @@ h1 {
   .options-area,
   .category-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .menu-grid .violet {
+    grid-column: 1 / -1;
   }
 }

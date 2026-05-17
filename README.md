@@ -13,16 +13,16 @@
 
 直接双击 `index.html` 即可在浏览器中运行。
 
-这个项目只使用 HTML、CSS 和 JavaScript，没有后端、数据库、npm 或外部 API，可以离线运行。
+项目只使用 HTML、CSS 和 JavaScript，没有 React、Vue、后端、数据库、npm、登录系统或外部 API，可以离线运行。
 
 ## 功能
 
-- Mixed Review 综合复习
-- Category Review 分类复习
-- Parent Command 亲子指令
-- Progress 学习进度
-- 使用浏览器 `speechSynthesis` 朗读英文，语速为 0.8
-- 使用 `localStorage` 保存总练习次数、总答题数和总正确数
+- Mixed Review 综合复习：显示英文，选择正确中文。
+- Picture Review 识图复习：显示英文，选择正确图卡。
+- Category Review 分类复习：选择一个类别后，只练习该类别。
+- Parent Command 亲子指令：随机显示英文动作指令，不判断对错。
+- Progress 学习进度：使用 `localStorage` 保存总练习次数、总答题数和总正确数。
+- 语音朗读：使用浏览器 `speechSynthesis`，语速为 0.8。
 
 ## 放到 GitHub Pages
 

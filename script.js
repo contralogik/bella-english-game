@@ -1,22 +1,137 @@
 "use strict";
 
-// Vocabulary is kept in plain JavaScript so the game works fully offline.
+// Vocabulary is kept in JavaScript arrays so the game works offline.
+// The picture field uses emoji as built-in visual cards, avoiding images, APIs, or CDNs.
 const vocabulary = [
-  ...makeWords("Actions", ["come", "go", "run", "turn around", "stop", "quick", "fast", "slow", "sit", "stand", "jump", "walk", "look", "listen"], ["来", "去", "跑", "转身", "停止", "快的", "快", "慢", "坐下", "站立", "跳", "走路", "看", "听"]),
-  ...makeWords("Colors", ["red", "blue", "yellow", "white", "orange", "green", "black"], ["红色", "蓝色", "黄色", "白色", "橙色", "绿色", "黑色"]),
-  ...makeWords("Home Objects", ["table", "chair", "bed", "window", "door", "bag", "book", "toy"], ["桌子", "椅子", "床", "窗户", "门", "包", "书", "玩具"]),
-  ...makeWords("Outdoor", ["car", "bike", "street", "tree", "building", "grass"], ["汽车", "自行车", "街道", "树", "建筑物", "草地"]),
-  ...makeWords("Feelings", ["happy", "sad", "tired", "angry"], ["开心的", "难过的", "累的", "生气的"]),
-  ...makeWords("Food", ["water", "milk", "bread", "apple", "banana"], ["水", "牛奶", "面包", "苹果", "香蕉"]),
-  ...makeWords("Animals", ["duck", "dog", "cat", "chicken", "pig", "bird", "fish", "rabbit"], ["鸭子", "狗", "猫", "鸡", "猪", "鸟", "鱼", "兔子"]),
-  ...makeWords("Temperature", ["hot", "cold"], ["热的", "冷的"]),
-  ...makeWords("Body Parts", ["hand", "foot", "nose", "mouth", "head", "face", "eye", "ear"], ["手", "脚", "鼻子", "嘴巴", "头", "脸", "眼睛", "耳朵"]),
-  ...makeWords("Pronouns", ["I", "you", "he", "she", "my", "your"], ["我", "你", "他", "她", "我的", "你的"]),
-  ...makeWords("Questions", ["what", "where", "why", "there is", "it is"], ["什么", "哪里", "为什么", "有", "它是"]),
-  ...makeWords("Daily Instructions", ["give", "show", "take", "put", "open", "close", "eat", "drink", "sleep", "like"], ["给", "展示", "拿", "放", "打开", "关闭", "吃", "喝", "睡觉", "喜欢"]),
-  ...makeWords("Position Words", ["in", "on", "under"], ["在里面", "在上面", "在下面"]),
-  ...makeWords("Adjectives", ["delicious", "beautiful", "perfect"], ["美味的", "漂亮的", "完美的"]),
-  ...makeWords("Daily Phrases", ["Good morning", "Good night", "Thank you", "You’re welcome", "Excuse me", "Sorry", "I’m hungry", "I’m thirsty", "I want this", "Let’s go"], ["早上好", "晚安", "谢谢", "不客气", "打扰一下", "对不起", "我饿了", "我渴了", "我想要这个", "我们走吧"])
+  ...makeWords("Actions", [
+    ["come", "来", "👋"],
+    ["go", "去", "👉"],
+    ["run", "跑", "🏃"],
+    ["turn around", "转身", "🔄"],
+    ["stop", "停止", "🛑"],
+    ["quick", "快的", "⚡"],
+    ["fast", "快", "💨"],
+    ["slow", "慢", "🐢"],
+    ["sit", "坐下", "🪑"],
+    ["stand", "站立", "🧍"],
+    ["jump", "跳", "🦘"],
+    ["walk", "走路", "🚶"],
+    ["look", "看", "👀"],
+    ["listen", "听", "👂"]
+  ]),
+  ...makeWords("Colors", [
+    ["red", "红色", "🔴"],
+    ["blue", "蓝色", "🔵"],
+    ["yellow", "黄色", "🟡"],
+    ["white", "白色", "⚪"],
+    ["orange", "橙色", "🟠"],
+    ["green", "绿色", "🟢"],
+    ["black", "黑色", "⚫"]
+  ]),
+  ...makeWords("Home Objects", [
+    ["table", "桌子", "🍽️"],
+    ["chair", "椅子", "🪑"],
+    ["bed", "床", "🛏️"],
+    ["window", "窗户", "🪟"],
+    ["door", "门", "🚪"],
+    ["bag", "包", "🎒"],
+    ["book", "书", "📘"],
+    ["toy", "玩具", "🧸"]
+  ]),
+  ...makeWords("Outdoor", [
+    ["car", "汽车", "🚗"],
+    ["bike", "自行车", "🚲"],
+    ["street", "街道", "🛣️"],
+    ["tree", "树", "🌳"],
+    ["building", "建筑物", "🏢"],
+    ["grass", "草地", "🌱"]
+  ]),
+  ...makeWords("Feelings", [
+    ["happy", "开心的", "😊"],
+    ["sad", "难过的", "😢"],
+    ["tired", "累的", "😴"],
+    ["angry", "生气的", "😠"]
+  ]),
+  ...makeWords("Food", [
+    ["water", "水", "💧"],
+    ["milk", "牛奶", "🥛"],
+    ["bread", "面包", "🍞"],
+    ["apple", "苹果", "🍎"],
+    ["banana", "香蕉", "🍌"]
+  ]),
+  ...makeWords("Animals", [
+    ["duck", "鸭子", "🦆"],
+    ["dog", "狗", "🐶"],
+    ["cat", "猫", "🐱"],
+    ["chicken", "鸡", "🐔"],
+    ["pig", "猪", "🐷"],
+    ["bird", "鸟", "🐦"],
+    ["fish", "鱼", "🐟"],
+    ["rabbit", "兔子", "🐰"]
+  ]),
+  ...makeWords("Temperature", [
+    ["hot", "热的", "🔥"],
+    ["cold", "冷的", "❄️"]
+  ]),
+  ...makeWords("Body Parts", [
+    ["hand", "手", "✋"],
+    ["foot", "脚", "🦶"],
+    ["nose", "鼻子", "👃"],
+    ["mouth", "嘴巴", "👄"],
+    ["head", "头", "🙂"],
+    ["face", "脸", "😀"],
+    ["eye", "眼睛", "👁️"],
+    ["ear", "耳朵", "👂"]
+  ]),
+  ...makeWords("Pronouns", [
+    ["I", "我", "🙋"],
+    ["you", "你", "👉"],
+    ["he", "他", "👦"],
+    ["she", "她", "👧"],
+    ["my", "我的", "🤲"],
+    ["your", "你的", "🫵"]
+  ]),
+  ...makeWords("Questions", [
+    ["what", "什么", "❓"],
+    ["where", "哪里", "📍"],
+    ["why", "为什么", "🤔"],
+    ["there is", "有", "✅"],
+    ["it is", "它是", "💬"]
+  ]),
+  ...makeWords("Daily Instructions", [
+    ["give", "给", "🤲"],
+    ["show", "展示", "🖼️"],
+    ["take", "拿", "✋"],
+    ["put", "放", "📦"],
+    ["open", "打开", "🔓"],
+    ["close", "关闭", "🔒"],
+    ["eat", "吃", "🍽️"],
+    ["drink", "喝", "🥤"],
+    ["sleep", "睡觉", "🛌"],
+    ["like", "喜欢", "💗"]
+  ]),
+  ...makeWords("Position Words", [
+    ["in", "在里面", "📥"],
+    ["on", "在上面", "⬆️"],
+    ["under", "在下面", "⬇️"]
+  ]),
+  ...makeWords("Adjectives", [
+    ["delicious", "美味的", "😋"],
+    ["beautiful", "漂亮的", "🌸"],
+    ["perfect", "完美的", "⭐"]
+  ]),
+  ...makeWords("Daily Phrases", [
+    ["Good morning", "早上好", "🌞"],
+    ["Good night", "晚安", "🌙"],
+    ["Thank you", "谢谢", "🙏"],
+    ["You’re welcome", "不客气", "😊"],
+    ["Excuse me", "打扰一下", "🙋"],
+    ["Sorry", "对不起", "🙇"],
+    ["I’m hungry", "我饿了", "🍽️"],
+    ["I’m thirsty", "我渴了", "🥤"],
+    ["I want this", "我想要这个", "☝️"],
+    ["Let’s go", "我们走吧", "🚶"]
+  ])
 ];
 
 const parentCommands = [
@@ -48,7 +163,6 @@ const categoryScreen = document.querySelector("#categoryScreen");
 const commandScreen = document.querySelector("#commandScreen");
 const resultScreen = document.querySelector("#resultScreen");
 const progressScreen = document.querySelector("#progressScreen");
-
 const questionWord = document.querySelector("#questionWord");
 const categoryLabel = document.querySelector("#categoryLabel");
 const roundInfo = document.querySelector("#roundInfo");
@@ -59,17 +173,14 @@ const categoryButtons = document.querySelector("#categoryButtons");
 const commandText = document.querySelector("#commandText");
 
 let quizWords = [];
+let quizMode = "text";
 let currentQuestion = null;
 let currentIndex = 0;
 let score = 0;
 let answered = false;
 
-function makeWords(category, words, chineseList) {
-  return words.map((word, index) => ({
-    category,
-    word,
-    chinese: chineseList[index]
-  }));
+function makeWords(category, rows) {
+  return rows.map(([word, chinese, picture]) => ({ category, word, chinese, picture }));
 }
 
 function showScreen(screenToShow) {
@@ -115,11 +226,12 @@ function updateProgress(questionCount, correctCount) {
   saveProgress(progress);
 }
 
-function startQuiz(words, label) {
+function startQuiz(words, label, mode = "text") {
   quizWords = shuffle(words).slice(0, 10);
+  quizMode = mode;
   currentIndex = 0;
   score = 0;
-  categoryLabel.textContent = label;
+  categoryLabel.textContent = mode === "picture" ? "Picture Review" : label;
   showScreen(quizScreen);
   showQuestion();
 }
@@ -130,15 +242,25 @@ function showQuestion() {
   currentQuestion = quizWords[currentIndex];
   questionWord.textContent = currentQuestion.word;
   roundInfo.textContent = `${currentIndex + 1} / ${quizWords.length}`;
+  optionsArea.innerHTML = "";
 
-  const wrongChoices = shuffle(vocabulary.filter((item) => item.chinese !== currentQuestion.chinese)).slice(0, 3);
+  const wrongChoices = shuffle(vocabulary.filter((item) => item.word !== currentQuestion.word)).slice(0, 3);
   const choices = shuffle([currentQuestion, ...wrongChoices]);
 
-  optionsArea.innerHTML = "";
   choices.forEach((choice) => {
     const button = document.createElement("button");
-    button.className = "option-button";
-    button.textContent = choice.chinese;
+    button.className = quizMode === "picture" ? "option-button picture-button" : "option-button";
+
+    if (quizMode === "picture") {
+      button.innerHTML = `
+        <span class="picture-symbol">${choice.picture}</span>
+        <span class="picture-label">${choice.chinese}</span>
+      `;
+      button.setAttribute("aria-label", `${choice.chinese} ${choice.picture}`);
+    } else {
+      button.textContent = choice.chinese;
+    }
+
     button.addEventListener("click", () => checkAnswer(button, choice));
     optionsArea.appendChild(button);
   });
@@ -149,7 +271,7 @@ function checkAnswer(button, choice) {
     return;
   }
 
-  if (choice.chinese === currentQuestion.chinese) {
+  if (choice.word === currentQuestion.word) {
     answered = true;
     score += 1;
     button.classList.add("correct");
@@ -186,7 +308,7 @@ function buildCategoryButtons() {
     button.className = "category-button";
     button.textContent = category;
     button.addEventListener("click", () => {
-      startQuiz(vocabulary.filter((item) => item.category === category), category);
+      startQuiz(vocabulary.filter((item) => item.category === category), category, "text");
     });
     categoryButtons.appendChild(button);
   });
@@ -211,14 +333,18 @@ function showProgress() {
 }
 
 document.addEventListener("click", (event) => {
-  const action = event.target.dataset.action;
+  const action = event.target.closest("[data-action]")?.dataset.action;
 
   if (action === "home") {
     showScreen(homeScreen);
   }
 
   if (action === "mixed") {
-    startQuiz(vocabulary, "Mixed Review");
+    startQuiz(vocabulary, "Mixed Review", "text");
+  }
+
+  if (action === "picture") {
+    startQuiz(vocabulary, "Picture Review", "picture");
   }
 
   if (action === "category") {

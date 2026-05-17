@@ -16,32 +16,43 @@
       </div>
 
       <div class="menu-grid">
-        <button class="menu-button coral" data-action="mixed">Mixed Review<br><span>综合复习</span></button>
-        <button class="menu-button sky" data-action="category">Category Review<br><span>分类复习</span></button>
-        <button class="menu-button lime" data-action="command">Parent Command<br><span>亲子指令</span></button>
-        <button class="menu-button violet" data-action="progress">Progress<br><span>学习进度</span></button>
+        <button class="menu-button coral" data-action="mixed" type="button">
+          Mixed Review<br><span>综合复习</span>
+        </button>
+        <button class="menu-button sky" data-action="picture" type="button">
+          Picture Review<br><span>识图复习</span>
+        </button>
+        <button class="menu-button mint" data-action="category" type="button">
+          Category Review<br><span>分类复习</span>
+        </button>
+        <button class="menu-button lime" data-action="command" type="button">
+          Parent Command<br><span>亲子指令</span>
+        </button>
+        <button class="menu-button violet" data-action="progress" type="button">
+          Progress<br><span>学习进度</span>
+        </button>
       </div>
     </section>
 
     <section id="quizScreen" class="screen">
       <header class="top-bar">
-        <button class="small-button" data-action="home">Home</button>
+        <button class="small-button" data-action="home" type="button">Home</button>
         <div id="roundInfo" class="round-info">1 / 10</div>
       </header>
 
       <div class="quiz-card">
         <p id="categoryLabel" class="category-label">Mixed Review</p>
         <h2 id="questionWord" class="question-word">word</h2>
-        <button id="listenButton" class="listen-button">🔊 Listen</button>
+        <button id="listenButton" class="listen-button" type="button">🔊 Listen</button>
       </div>
 
       <div id="optionsArea" class="options-area"></div>
-      <p id="feedback" class="feedback"></p>
+      <p id="feedback" class="feedback" aria-live="polite"></p>
     </section>
 
     <section id="categoryScreen" class="screen">
       <header class="top-bar">
-        <button class="small-button" data-action="home">Home</button>
+        <button class="small-button" data-action="home" type="button">Home</button>
         <h2>Category Review</h2>
       </header>
       <p class="page-note">Choose one category to practice.</p>
@@ -50,16 +61,16 @@
 
     <section id="commandScreen" class="screen">
       <header class="top-bar">
-        <button class="small-button" data-action="home">Back Home</button>
+        <button class="small-button" data-action="home" type="button">Back Home</button>
       </header>
 
       <div class="command-card">
         <p class="category-label">Parent Command</p>
         <h2 id="commandText">Run!</h2>
-        <button id="commandListenButton" class="listen-button">🔊 Listen</button>
+        <button id="commandListenButton" class="listen-button" type="button">🔊 Listen</button>
       </div>
 
-      <button id="nextCommandButton" class="primary-button">Next</button>
+      <button id="nextCommandButton" class="primary-button" type="button">Next</button>
     </section>
 
     <section id="resultScreen" class="screen">
@@ -67,13 +78,13 @@
         <p class="badge">Finished</p>
         <h2>Great work!</h2>
         <p id="scoreText" class="score-text">Score: 0 / 10</p>
-        <button class="primary-button" data-action="home">Back Home</button>
+        <button class="primary-button" data-action="home" type="button">Back Home</button>
       </div>
     </section>
 
     <section id="progressScreen" class="screen">
       <header class="top-bar">
-        <button class="small-button" data-action="home">Home</button>
+        <button class="small-button" data-action="home" type="button">Home</button>
         <h2>Progress</h2>
       </header>
 
