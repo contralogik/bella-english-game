@@ -156,6 +156,8 @@ const vocabulary = [
   ])
 ];
 
+const quizQuestionCount = 30;
+
 const parentCommands = [
   "Run!",
   "Stop!",
@@ -174,7 +176,45 @@ const parentCommands = [
   "Drink water!",
   "Look at me!",
   "Listen to me!",
-  "Go to the chair!"
+  "Go to the chair!",
+  "Come here, please.",
+  "Please sit down.",
+  "Please stand up.",
+  "Raise your hand.",
+  "Clap your hands.",
+  "Touch your ears.",
+  "Touch your mouth.",
+  "Point to the window.",
+  "Point to the door.",
+  "Show me your book.",
+  "Give me a high five.",
+  "Can you help me?",
+  "What do you like?",
+  "Do you like apples?",
+  "How many books are there?",
+  "Where is your bag?",
+  "What color is it?",
+  "Are you hungry?",
+  "Are you thirsty?",
+  "I am happy.",
+  "I am tired.",
+  "Let's read a book.",
+  "Let's drink some water.",
+  "Let's wash our hands.",
+  "Put on your shoes.",
+  "Take off your shoes.",
+  "Open your book.",
+  "Close your book.",
+  "Clean the table.",
+  "Pack your bag.",
+  "Say thank you.",
+  "Say sorry.",
+  "Good morning, Mom.",
+  "Good night, Dad.",
+  "Have some rice.",
+  "Eat some fruit.",
+  "Drink some milk.",
+  "Walk slowly, please."
 ];
 
 const progressKey = "bellaEnglishReviewProgress";
@@ -182,6 +222,7 @@ const screens = document.querySelectorAll(".screen");
 const homeScreen = document.querySelector("#homeScreen");
 const quizScreen = document.querySelector("#quizScreen");
 const categoryScreen = document.querySelector("#categoryScreen");
+const categorySummaryScreen = document.querySelector("#categorySummaryScreen");
 const commandScreen = document.querySelector("#commandScreen");
 const resultScreen = document.querySelector("#resultScreen");
 const progressScreen = document.querySelector("#progressScreen");
@@ -192,6 +233,8 @@ const optionsArea = document.querySelector("#optionsArea");
 const feedback = document.querySelector("#feedback");
 const scoreText = document.querySelector("#scoreText");
 const categoryButtons = document.querySelector("#categoryButtons");
+const summaryTitle = document.querySelector("#summaryTitle");
+const summaryList = document.querySelector("#summaryList");
 const commandText = document.querySelector("#commandText");
 
 let quizWords = [];
@@ -249,7 +292,7 @@ function updateProgress(questionCount, correctCount) {
 }
 
 function startQuiz(words, label, mode = "text") {
-  quizWords = shuffle(words).slice(0, 10);
+  quizWords = shuffle(words).slice(0, quizQuestionCount);
   quizMode = mode;
   currentIndex = 0;
   score = 0;
@@ -332,11 +375,31 @@ function buildCategoryButtons() {
     const button = document.createElement("button");
     button.className = "category-button";
     button.textContent = `${category} (${count})`;
-    button.addEventListener("click", () => {
-      startQuiz(vocabulary.filter((item) => item.category === category), category, "text");
-    });
+    button.addEventListener("click", () => showCategorySummary(category));
     categoryButtons.appendChild(button);
   });
+}
+
+function showCategorySummary(category) {
+  const words = vocabulary.filter((item) => item.category === category);
+  summaryTitle.textContent = `${category} (${words.length})`;
+  summaryList.innerHTML = "";
+
+  words.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "word-card";
+    card.innerHTML = `
+      <span class="word-picture">${item.picture}</span>
+      <span class="word-text">
+        <strong>${item.word}</strong>
+        <span>${item.chinese}</span>
+      </span>
+      <button class="tiny-listen" data-speak="${item.word}" type="button" aria-label="Listen to ${item.word}">🔊</button>
+    `;
+    summaryList.appendChild(card);
+  });
+
+  showScreen(categorySummaryScreen);
 }
 
 function showRandomCommand() {
@@ -359,6 +422,11 @@ function showProgress() {
 
 document.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
+  const speakText = event.target.closest("[data-speak]")?.dataset.speak;
+
+  if (speakText) {
+    speak(speakText);
+  }
 
   if (action === "home") {
     showScreen(homeScreen);
