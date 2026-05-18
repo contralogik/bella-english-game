@@ -157,6 +157,7 @@ const vocabulary = [
 ];
 
 const quizQuestionCount = 30;
+const voiceSettingsKey = "bellaEnglishReviewVoice";
 
 const parentCommands = [
   "Run!",
@@ -236,6 +237,8 @@ const categoryButtons = document.querySelector("#categoryButtons");
 const summaryTitle = document.querySelector("#summaryTitle");
 const summaryList = document.querySelector("#summaryList");
 const commandText = document.querySelector("#commandText");
+const voiceSelect = document.querySelector("#voiceSelect");
+const voiceTestButton = document.querySelector("#voiceTestButton");
 
 let quizWords = [];
 let quizMode = "text";
@@ -243,9 +246,17 @@ let currentQuestion = null;
 let currentIndex = 0;
 let score = 0;
 let answered = false;
+let englishVoices = [];
+let selectedVoice = null;
 
 function makeWords(category, rows) {
-  return rows.map(([word, chinese, picture]) => ({ category, word, chinese, picture }));
+  return rows.map(([word, chinese, picture, speechText]) => ({
+    category,
+    word,
+    chinese,
+    picture,
+    speechText: speechText || cleanSpeechText(word)
+  }));
 }
 
 function showScreen(screenToShow) {
@@ -264,10 +275,123 @@ function speak(text) {
   }
 
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.8;
+  const utterance = new SpeechSynthesisUtterance(cleanSpeechText(text));
+  const voice = selectedVoice || chooseBestVoice();
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+  } else {
+    utterance.lang = "en-US";
+  }
+  utterance.rate = 0.72;
+  utterance.pitch = 1;
+  utterance.volume = 1;
   window.speechSynthesis.speak(utterance);
+}
+
+function cleanSpeechText(text) {
+  const replacements = {
+    "I": "I.",
+    "there is": "There is.",
+    "it is": "It is.",
+    "You’re welcome": "You are welcome.",
+    "I’m hungry": "I am hungry.",
+    "I’m thirsty": "I am thirsty.",
+    "Let’s go": "Let us go.",
+    "close": "close the door",
+    "read": "read a book"
+  };
+
+  const direct = replacements[text];
+  if (direct) {
+    return direct;
+  }
+
+  let spoken = text
+    .replace(/[’]/g, "'")
+    .replace(/\bI'm\b/gi, "I am")
+    .replace(/\bLet's\b/gi, "Let us")
+    .replace(/\bYou're\b/gi, "You are")
+    .replace(/\bcan't\b/gi, "cannot")
+    .trim();
+
+  if (!/[.!?]$/.test(spoken)) {
+    spoken += ".";
+  }
+
+  return spoken;
+}
+
+function voiceScore(voice) {
+  const name = voice.name.toLowerCase();
+  const lang = voice.lang.toLowerCase();
+  let score = 0;
+
+  if (lang === "en-us") score += 110;
+  else if (lang === "en-gb") score += 100;
+  else if (lang.startsWith("en-au") || lang.startsWith("en-ca")) score += 86;
+  else if (lang.startsWith("en")) score += 70;
+
+  if (name.includes("natural") || name.includes("neural") || name.includes("online")) score += 38;
+  if (name.includes("microsoft jenny")) score += 36;
+  if (name.includes("microsoft aria")) score += 35;
+  if (name.includes("microsoft guy")) score += 30;
+  if (name.includes("google us english")) score += 30;
+  if (name.includes("google uk english")) score += 28;
+  if (name.includes("samantha")) score += 24;
+  if (name.includes("daniel")) score += 22;
+  if (name.includes("zira")) score += 20;
+  if (name.includes("mark")) score += 18;
+  if (name.includes("compact")) score -= 20;
+
+  return score;
+}
+
+function chooseBestVoice() {
+  return englishVoices[0] || null;
+}
+
+function loadEnglishVoices() {
+  if (!("speechSynthesis" in window)) {
+    voiceSelect.innerHTML = "<option>Speech not supported</option>";
+    voiceSelect.disabled = true;
+    voiceTestButton.disabled = true;
+    return;
+  }
+
+  const savedVoiceName = localStorage.getItem(voiceSettingsKey);
+  englishVoices = window.speechSynthesis
+    .getVoices()
+    .filter((voice) => voice.lang.toLowerCase().startsWith("en"))
+    .sort((a, b) => voiceScore(b) - voiceScore(a));
+
+  voiceSelect.innerHTML = "";
+
+  if (englishVoices.length === 0) {
+    const option = document.createElement("option");
+    option.textContent = "Default English Voice";
+    option.value = "";
+    voiceSelect.appendChild(option);
+    selectedVoice = null;
+    return;
+  }
+
+  englishVoices.forEach((voice, index) => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+    option.textContent = `${voice.name} (${voice.lang})${index === 0 ? " ★" : ""}`;
+    voiceSelect.appendChild(option);
+  });
+
+  selectedVoice = englishVoices.find((voice) => voice.name === savedVoiceName) || chooseBestVoice();
+  voiceSelect.value = selectedVoice?.name || "";
+}
+
+function setSelectedVoice(name) {
+  selectedVoice = englishVoices.find((voice) => voice.name === name) || chooseBestVoice();
+  if (selectedVoice) {
+    localStorage.setItem(voiceSettingsKey, selectedVoice.name);
+  }
 }
 
 function getProgress() {
@@ -456,7 +580,7 @@ document.addEventListener("click", (event) => {
 
 document.querySelector("#listenButton").addEventListener("click", () => {
   if (currentQuestion) {
-    speak(currentQuestion.word);
+    speak(currentQuestion.speechText);
   }
 });
 
@@ -465,5 +589,16 @@ document.querySelector("#commandListenButton").addEventListener("click", () => {
 });
 
 document.querySelector("#nextCommandButton").addEventListener("click", showRandomCommand);
+voiceSelect.addEventListener("change", () => {
+  setSelectedVoice(voiceSelect.value);
+  speak("Hello Bella. Let's practice English.");
+});
+voiceTestButton.addEventListener("click", () => {
+  speak("Hello Bella. This English voice is clear and slow.");
+});
 
 buildCategoryButtons();
+loadEnglishVoices();
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.onvoiceschanged = loadEnglishVoices;
+}
