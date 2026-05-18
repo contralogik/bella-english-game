@@ -71,7 +71,8 @@ h1 {
 
 .menu-grid,
 .category-grid,
-.options-area {
+.options-area,
+.word-list {
   display: grid;
   gap: 14px;
 }
@@ -238,6 +239,53 @@ h1 {
   border: 3px solid #ffd36a;
 }
 
+.word-card {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 78px;
+  padding: 12px;
+  background: #ffffff;
+  border: 3px solid #d6e6ff;
+  border-radius: 16px;
+  box-shadow: 0 5px 0 rgba(35, 48, 71, 0.12);
+}
+
+.word-picture {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  font-size: 2.2rem;
+  background: #fff7d8;
+  border-radius: 14px;
+}
+
+.word-text {
+  display: grid;
+  gap: 4px;
+}
+
+.word-text strong {
+  font-size: 1.15rem;
+}
+
+.word-text span {
+  color: #60708c;
+  font-weight: 800;
+}
+
+.tiny-listen {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.2rem;
+  background: #ffe27a;
+  border-radius: 12px;
+  box-shadow: 0 4px 0 rgba(35, 48, 71, 0.15);
+}
+
 .score-text {
   margin: 12px 0 24px;
   font-size: 1.5rem;
@@ -264,7 +312,8 @@ h1 {
 @media (min-width: 460px) {
   .menu-grid,
   .options-area,
-  .category-grid {
+  .category-grid,
+  .word-list {
     grid-template-columns: 1fr 1fr;
   }
 
