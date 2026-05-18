@@ -124,6 +124,51 @@ h1 {
   background: #cdb7ff;
 }
 
+.voice-panel {
+  margin-bottom: 18px;
+  padding: 14px;
+  background: #ffffff;
+  border: 3px solid #d6e6ff;
+  border-radius: 18px;
+  box-shadow: 0 6px 0 rgba(35, 48, 71, 0.12);
+}
+
+.voice-panel label {
+  display: block;
+  margin-bottom: 8px;
+  color: #60708c;
+  font-weight: 900;
+}
+
+.voice-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.voice-row select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  color: #243047;
+  font: inherit;
+  font-weight: 800;
+  background: #fffdf7;
+  border: 3px solid #ffd36a;
+  border-radius: 14px;
+}
+
+.voice-test-button {
+  min-width: 82px;
+  min-height: 48px;
+  padding: 10px 12px;
+  color: #243047;
+  font-weight: 900;
+  background: #ffe27a;
+  border-radius: 14px;
+  box-shadow: 0 5px 0 rgba(35, 48, 71, 0.15);
+}
+
 .top-bar {
   display: flex;
   align-items: center;
