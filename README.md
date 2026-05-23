@@ -22,7 +22,7 @@
 - Category Words 分类单词汇总：选择一个类别后，查看该类别全部词汇、中文意思和配图。
 - Parent Interaction 亲子互动：随机显示适合小学生日常互动的英文短语，不判断对错。
 - Progress 学习进度：使用 `localStorage` 保存总练习次数、总答题数和总正确数。
-- 语音朗读：使用浏览器 `speechSynthesis`，自动优先选择清晰的英文原生语音，语速为 0.72，并支持手动切换 English Voice。
+- 语音朗读：使用浏览器 `speechSynthesis`，优先选择 en-US/en-GB 的自然英文语音，语速为 0.85，并支持 `phoneticHint` 优化易读错单词。
 - 答错会显示 `Try again!`，然后进入下一题；答错题目不会计入正确数。
 
 ## 放到 GitHub Pages
