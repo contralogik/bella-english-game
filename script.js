@@ -17,7 +17,19 @@ const vocabulary = [
     ["jump", "跳", "🦘"],
     ["walk", "走路", "🚶"],
     ["look", "看", "👀"],
-    ["listen", "听", "👂"]
+    ["listen", "听", "👂"],
+    ["throw", "扔；投", "🏀"],
+    ["say", "说", "💬"],
+    ["swim", "游泳", "🏊"],
+    ["fly", "飞", "🪽"],
+    ["wake up", "醒来；起床", "⏰"],
+    ["brush teeth", "刷牙", "🪥"],
+    ["play with", "和……玩", "🧸"],
+    ["have a bath", "洗澡", "🛁"],
+    ["draw picture", "画画", "🎨"],
+    ["learn", "学习", "📖"],
+    ["write", "写", "✏️"],
+    ["taste", "尝；品尝", "👅"]
   ]),
   ...makeWords("Colors", [
     ["red", "红色", "🔴"],
@@ -36,7 +48,8 @@ const vocabulary = [
     ["door", "门", "🚪"],
     ["bag", "包", "🎒"],
     ["book", "书", "📘"],
-    ["toy", "玩具", "🧸"]
+    ["toy", "玩具", "🧸"],
+    ["house", "房子", "🏠"]
   ]),
   ...makeWords("Outdoor", [
     ["car", "汽车", "🚗"],
@@ -44,7 +57,8 @@ const vocabulary = [
     ["street", "街道", "🛣️"],
     ["tree", "树", "🌳"],
     ["building", "建筑物", "🏢"],
-    ["grass", "草地", "🌱"]
+    ["grass", "草地", "🌱"],
+    ["star", "星星", "⭐"]
   ]),
   ...makeWords("Feelings", [
     ["happy", "开心的", "😊"],
@@ -60,7 +74,9 @@ const vocabulary = [
     ["banana", "香蕉", "🍌"],
     ["noodles", "面条", "🍜"],
     ["fruit", "水果", "🍇"],
-    ["rice", "米饭", "🍚"]
+    ["rice", "米饭", "🍚"],
+    ["tomato", "西红柿", "🍅"],
+    ["food", "食物", "🍽️"]
   ]),
   ...makeWords("Animals", [
     ["duck", "鸭子", "🦆"],
@@ -72,7 +88,13 @@ const vocabulary = [
     ["fish", "鱼", "🐟"],
     ["rabbit", "兔子", "🐰"],
     ["tiger", "老虎", "🐯"],
-    ["lion", "狮子", "🦁"]
+    ["lion", "狮子", "🦁"],
+    ["snake", "蛇", "🐍"],
+    ["cow", "奶牛", "🐄"],
+    ["sheep", "羊", "🐑"],
+    ["horse", "马", "🐴"],
+    ["monkey", "猴子", "🐵"],
+    ["elephant", "大象", "🐘"]
   ]),
   ...makeWords("Temperature", [
     ["hot", "热的", "🔥"],
@@ -109,6 +131,8 @@ const vocabulary = [
     ["who", "谁", "🧒"],
     ["how many", "多少", "🔢"],
     ["what do you like?", "你喜欢什么？", "💗"],
+    ["what can it do?", "它会做什么？", "❓"],
+    ["which", "哪一个", "☝️"],
     ["there is", "有", "✅"],
     ["it is", "它是", "💬"]
   ]),
@@ -118,7 +142,7 @@ const vocabulary = [
     ["take", "拿", "✋"],
     ["put", "放", "📦"],
     ["open", "打开", "🔓"],
-    ["close", "关闭", "🔒"],
+    ["close", "关闭", "🔒", "close the door"],
     ["eat", "吃", "🍽️"],
     ["drink", "喝", "🥤"],
     ["sleep", "睡觉", "🛌"],
@@ -137,10 +161,30 @@ const vocabulary = [
     ["perfect", "完美的", "⭐"],
     ["tall", "高的", "📏"],
     ["short", "矮的；短的", "↕️"],
-    ["healthy", "健康的", "💪"]
+    ["healthy", "健康的", "💪"],
+    ["heavy", "重的", "🏋️"],
+    ["light", "轻的", "🪶"],
+    ["sour", "酸的", "🍋"]
   ]),
   ...makeWords("People", [
-    ["teacher", "老师", "👩‍🏫"]
+    ["teacher", "老师", "👩‍🏫"],
+    ["friend", "朋友", "🧑‍🤝‍🧑"],
+    ["name", "名字", "🏷️"]
+  ]),
+  ...makeWords("Clothes", [
+    ["clothes", "衣服", "👕"],
+    ["trousers", "裤子", "👖"],
+    ["socks", "袜子", "🧦"],
+    ["shoe", "鞋", "👟"],
+    ["He is wearing a red shirt", "他穿着一件红色衬衫", "👕"]
+  ]),
+  ...makeWords("Nature", [
+    ["soil", "土壤", "🟫"],
+    ["leaf", "叶子", "🍃"],
+    ["plant", "植物", "🪴"]
+  ]),
+  ...makeWords("Art and Music", [
+    ["music", "音乐", "🎵"]
   ]),
   ...makeWords("Daily Phrases", [
     ["Good morning", "早上好", "🌞"],
@@ -215,7 +259,53 @@ const parentCommands = [
   "Have some rice.",
   "Eat some fruit.",
   "Drink some milk.",
-  "Walk slowly, please."
+  "Walk slowly, please.",
+  "Throw the ball.",
+  "Say your name.",
+  "What is your name?",
+  "Write your name.",
+  "Let's learn a new word.",
+  "Let's draw a picture.",
+  "Let's listen to music.",
+  "Play with your friend.",
+  "Have a bath, please.",
+  "Wake up, please.",
+  "Brush your teeth.",
+  "Put on your socks.",
+  "Put on your shoes.",
+  "Take off your socks.",
+  "Take off your shoes.",
+  "Show me your clothes.",
+  "Point to your trousers.",
+  "He is wearing a red shirt.",
+  "Which one is heavy?",
+  "Which one is light?",
+  "Taste the tomato.",
+  "Is it sour?",
+  "Show me the food.",
+  "Touch the leaf.",
+  "Put soil in the pot.",
+  "Water the plant.",
+  "Point to the star.",
+  "Where is the house?",
+  "What can it do?",
+  "The fish can swim.",
+  "The bird can fly.",
+  "Can a snake fly?",
+  "Show me the snake.",
+  "Show me the cow.",
+  "Show me the sheep.",
+  "Show me the horse.",
+  "Show me the monkey.",
+  "Show me the elephant.",
+  "What does a cow say?",
+  "The monkey can jump.",
+  "The elephant is heavy.",
+  "The leaf is light.",
+  "Which animal do you like?",
+  "Draw a star.",
+  "Write the word tomato.",
+  "Say thank you to your friend."
 ];
 
 const progressKey = "bellaEnglishReviewProgress";
@@ -250,12 +340,12 @@ let englishVoices = [];
 let selectedVoice = null;
 
 function makeWords(category, rows) {
-  return rows.map(([word, chinese, picture, speechText]) => ({
+  return rows.map(([word, chinese, picture, phoneticHint]) => ({
     category,
     word,
     chinese,
     picture,
-    speechText: speechText || cleanSpeechText(word)
+    phoneticHint
   }));
 }
 
@@ -275,18 +365,23 @@ function speak(text) {
   }
 
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(cleanSpeechText(text));
+  const utterance = new SpeechSynthesisUtterance(getSpeechText(text));
   const voice = selectedVoice || chooseBestVoice();
   if (voice) {
     utterance.voice = voice;
-    utterance.lang = voice.lang;
-  } else {
-    utterance.lang = "en-US";
   }
-  utterance.rate = 0.72;
+  utterance.lang = "en-US";
+  utterance.rate = 0.85;
   utterance.pitch = 1;
   utterance.volume = 1;
   window.speechSynthesis.speak(utterance);
+}
+
+function getSpeechText(text) {
+  if (typeof text === "object" && text !== null) {
+    return cleanSpeechText(text.phoneticHint || text.word || "");
+  }
+  return cleanSpeechText(text);
 }
 
 function cleanSpeechText(text) {
@@ -327,18 +422,20 @@ function voiceScore(voice) {
   const lang = voice.lang.toLowerCase();
   let score = 0;
 
-  if (lang === "en-us") score += 110;
-  else if (lang === "en-gb") score += 100;
+  if (lang === "en-us") score += 150;
+  else if (lang === "en-gb") score += 135;
+  else if (lang.startsWith("en-us")) score += 125;
+  else if (lang.startsWith("en-gb")) score += 118;
   else if (lang.startsWith("en-au") || lang.startsWith("en-ca")) score += 86;
-  else if (lang.startsWith("en")) score += 70;
+  else if (lang.startsWith("en")) score += 60;
 
-  if (name.includes("natural") || name.includes("neural") || name.includes("online")) score += 38;
-  if (name.includes("microsoft jenny")) score += 36;
-  if (name.includes("microsoft aria")) score += 35;
+  if (name.includes("google us english")) score += 60;
+  if (name.includes("microsoft jenny")) score += 58;
+  if (name.includes("microsoft aria")) score += 56;
+  if (name.includes("samantha")) score += 54;
+  if (name.includes("natural") || name.includes("neural") || name.includes("online")) score += 44;
   if (name.includes("microsoft guy")) score += 30;
-  if (name.includes("google us english")) score += 30;
   if (name.includes("google uk english")) score += 28;
-  if (name.includes("samantha")) score += 24;
   if (name.includes("daniel")) score += 22;
   if (name.includes("zira")) score += 20;
   if (name.includes("mark")) score += 18;
@@ -362,7 +459,10 @@ function loadEnglishVoices() {
   const savedVoiceName = localStorage.getItem(voiceSettingsKey);
   englishVoices = window.speechSynthesis
     .getVoices()
-    .filter((voice) => voice.lang.toLowerCase().startsWith("en"))
+    .filter((voice) => {
+      const lang = voice.lang.toLowerCase();
+      return lang === "en-us" || lang === "en-gb" || lang.startsWith("en");
+    })
     .sort((a, b) => voiceScore(b) - voiceScore(a));
 
   voiceSelect.innerHTML = "";
@@ -439,6 +539,7 @@ function showQuestion() {
   choices.forEach((choice) => {
     const button = document.createElement("button");
     button.className = quizMode === "picture" ? "option-button picture-button" : "option-button";
+    button.dataset.word = choice.word;
 
     if (quizMode === "picture") {
       button.innerHTML = `
@@ -469,9 +570,18 @@ function checkAnswer(button, choice) {
     setTimeout(nextQuestion, 850);
   } else {
     button.classList.add("wrong");
+    showCorrectAnswer();
     feedback.textContent = "Try again!";
-    setTimeout(nextQuestion, 850);
+    setTimeout(nextQuestion, 1200);
   }
+}
+
+function showCorrectAnswer() {
+  [...optionsArea.children].forEach((optionButton) => {
+    if (optionButton.dataset.word === currentQuestion.word) {
+      optionButton.classList.add("correct");
+    }
+  });
 }
 
 function nextQuestion() {
@@ -518,7 +628,7 @@ function showCategorySummary(category) {
         <strong>${item.word}</strong>
         <span>${item.chinese}</span>
       </span>
-      <button class="tiny-listen" data-speak="${item.word}" type="button" aria-label="Listen to ${item.word}">🔊</button>
+      <button class="tiny-listen" data-speak="${item.phoneticHint || item.word}" type="button" aria-label="Listen to ${item.word}">🔊</button>
     `;
     summaryList.appendChild(card);
   });
@@ -580,7 +690,7 @@ document.addEventListener("click", (event) => {
 
 document.querySelector("#listenButton").addEventListener("click", () => {
   if (currentQuestion) {
-    speak(currentQuestion.speechText);
+    speak(currentQuestion);
   }
 });
 
