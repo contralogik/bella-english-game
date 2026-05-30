@@ -45,7 +45,7 @@
     <section id="quizScreen" class="screen">
       <header class="top-bar">
         <button class="small-button" data-action="home" type="button">Home</button>
-        <div id="roundInfo" class="round-info">1 / 30</div>
+        <div id="roundInfo" class="round-info">1 / 40</div>
       </header>
 
       <div class="quiz-card">
@@ -93,7 +93,7 @@
       <div class="result-card">
         <p class="badge">Finished</p>
         <h2>Great work!</h2>
-        <p id="scoreText" class="score-text">Score: 0 / 30</p>
+        <p id="scoreText" class="score-text">Score: 0 / 40</p>
         <button class="primary-button" data-action="home" type="button">Back Home</button>
       </div>
     </section>
@@ -124,5 +124,133 @@
   </main>
 
   <script src="script.js"></script>
+  <script>
+    // Keeps the hosted page compatible if GitHub Pages still has an older script.js cached.
+    (function applyBellaGameUpdate() {
+      const quizSize = 40;
+      const extraWords = [
+        ["Actions", "watch TV", "看电视", "📺"],
+        ["Actions", "see", "看见", "👀"],
+        ["Actions", "move", "移动", "➡️"],
+        ["Actions", "work", "工作", "💼"],
+        ["Home Objects", "pen", "钢笔", "🖊️"],
+        ["Home Objects", "umbrella", "雨伞", "☂️"],
+        ["Home Objects", "towel", "毛巾", "🧺"],
+        ["Home Objects", "bucket", "桶", "🪣"],
+        ["Outdoor", "school", "学校", "🏫"],
+        ["Food", "strawberry", "草莓", "🍓"],
+        ["Food", "cake", "蛋糕", "🍰"],
+        ["Food", "egg", "鸡蛋", "🥚"],
+        ["Family", "grandmother", "奶奶；外婆", "👵"],
+        ["Questions", "how", "怎样；如何", "❔"],
+        ["Questions", "what are you doing?", "你正在做什么？", "🏃"],
+        ["Questions", "what do you do?", "你是做什么的？", "💼"],
+        ["Questions", "what can you see?", "你能看见什么？", "👀"],
+        ["Questions", "how are you?", "你好吗？", "😊"],
+        ["Questions", "do you have a blue pen?", "你有一支蓝色钢笔吗？", "🖊️"],
+        ["Questions", "which one is different?", "哪一个不一样？", "☝️"],
+        ["Questions", "what can we use fire for?", "我们可以用火做什么？", "🔥"],
+        ["Position Words", "behind", "在后面", "↩️"],
+        ["Adjectives", "sweet", "甜的", "🍯"],
+        ["Adjectives", "empty", "空的", "⬜"],
+        ["Adjectives", "full", "满的", "🈵"],
+        ["Adjectives", "dirty", "脏的", "🟤"],
+        ["Adjectives", "clean", "干净的", "✨"],
+        ["People", "doctor", "医生", "🧑‍⚕️"],
+        ["Nature", "land", "陆地", "🏝️"],
+        ["Nature", "sea", "大海", "🌊"],
+        ["Nature", "sky", "天空", "☁️"],
+        ["Nature", "moon", "月亮", "🌙"],
+        ["Nature", "river", "河流", "🏞️"],
+        ["Transport", "ship", "船", "🚢"],
+        ["Transport", "train", "火车", "🚆"],
+        ["Transport", "bus", "公交车", "🚌"],
+        ["Transport", "by train", "乘火车", "🚆"],
+        ["Time", "morning", "早晨；上午", "🌅"],
+        ["Time", "afternoon", "下午", "🌤️"],
+        ["Time", "evening", "晚上；傍晚", "🌆"],
+        ["Daily Phrases", "I get 7 stars", "我得到了7颗星", "⭐"],
+        ["Daily Phrases", "You have a purple pen", "你有一支紫色钢笔", "🖊️"]
+      ];
+      const extraCommands = [
+        "What can you see?",
+        "I can see the moon.",
+        "What are you doing?",
+        "I am reading a book.",
+        "How are you?",
+        "I am fine, thank you.",
+        "How do you go to school?",
+        "I go to school by train.",
+        "Where is the pen?",
+        "It is behind the book.",
+        "Where is your grandmother?",
+        "She is at home.",
+        "Why do you like strawberries?",
+        "Because they are sweet.",
+        "Which one is different?",
+        "This one is different.",
+        "What color is your pen?",
+        "It is purple.",
+        "Do you have a blue pen?",
+        "Yes, I do.",
+        "No, I don't.",
+        "What can we use fire for?",
+        "We can use fire to cook food.",
+        "What do you do?",
+        "I am a student.",
+        "What does a doctor do?",
+        "A doctor helps people.",
+        "What is in the bucket?",
+        "The bucket is empty.",
+        "Is the towel clean?",
+        "Yes, it is clean.",
+        "Is your hand dirty?",
+        "No, it is clean.",
+        "What can you see in the sky?",
+        "Where is the ship?",
+        "The ship is on the sea.",
+        "Where is the train?",
+        "The train is on the land.",
+        "What do you do in the morning?",
+        "I brush my teeth in the morning.",
+        "What do you do in the evening?",
+        "I watch TV in the evening.",
+        "How many stars do you get?",
+        "I get 7 stars.",
+        "Which one is full?",
+        "Which one is empty?"
+      ];
+
+      const existingWords = new Set(vocabulary.map((item) => item.word.toLowerCase()));
+      extraWords.forEach(([category, word, chinese, picture, phoneticHint]) => {
+        if (!existingWords.has(word.toLowerCase())) {
+          vocabulary.push({ category, word, chinese, picture, phoneticHint });
+          existingWords.add(word.toLowerCase());
+        }
+      });
+
+      const existingCommands = new Set(parentCommands);
+      extraCommands.forEach((command) => {
+        if (!existingCommands.has(command)) {
+          parentCommands.push(command);
+          existingCommands.add(command);
+        }
+      });
+
+      startQuiz = function startQuizWithFortyQuestions(words, label, mode = "text") {
+        quizWords = shuffle(words).slice(0, quizSize);
+        quizMode = mode;
+        currentIndex = 0;
+        score = 0;
+        categoryLabel.textContent = mode === "picture" ? "Picture Review" : label;
+        showScreen(quizScreen);
+        showQuestion();
+      };
+
+      roundInfo.textContent = "1 / 40";
+      scoreText.textContent = "Score: 0 / 40";
+      buildCategoryButtons();
+    }());
+  </script>
 </body>
 </html>
