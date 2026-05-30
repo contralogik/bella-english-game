@@ -17,8 +17,8 @@
 
 ## 功能
 
-- Mixed Review 综合复习：每轮 30 题，显示英文，选择正确中文。
-- Picture Review 识图复习：每轮 30 题，显示英文，选择正确图卡。
+- Mixed Review 综合复习：每轮 40 题，显示英文，选择正确中文。
+- Picture Review 识图复习：每轮 40 题，显示英文，选择正确图卡。
 - Category Words 分类单词汇总：选择一个类别后，查看该类别全部词汇、中文意思和配图。
 - Parent Interaction 亲子互动：随机显示适合小学生日常互动的英文短语，不判断对错。
 - Progress 学习进度：使用 `localStorage` 保存总练习次数、总答题数和总正确数。
