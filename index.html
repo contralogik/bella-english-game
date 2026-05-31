@@ -125,8 +125,8 @@
 
   <script src="script.js"></script>
   <script>
-    // Keeps the hosted page compatible if GitHub Pages still has an older script.js cached.
-    (function applyBellaGameUpdate() {
+    // Keeps GitHub Pages behavior aligned with this release even if older script.js is cached.
+    (function applyParentInteractionReplacement() {
       const quizSize = 40;
       const extraWords = [
         ["Actions", "watch TV", "看电视", "📺"],
@@ -172,53 +172,86 @@
         ["Daily Phrases", "I get 7 stars", "我得到了7颗星", "⭐"],
         ["Daily Phrases", "You have a purple pen", "你有一支紫色钢笔", "🖊️"]
       ];
-      const extraCommands = [
+      const replacementCommands = [
+        "Run.",
+        "Stop.",
+        "Jump.",
+        "Walk slowly.",
+        "Turn around.",
+        "Sit down.",
+        "Stand up.",
+        "Touch your [body part].",
+        "Show me your [body part].",
+        "Point to the [object].",
+        "Open the [object].",
+        "Close the [object].",
+        "Give me the [object].",
+        "Put the [object] on the [object].",
+        "Put on your [clothes].",
+        "Take off your [clothes].",
+        "What is it?",
+        "What color is it?",
         "What can you see?",
-        "I can see the moon.",
+        "What can it do?",
         "What are you doing?",
-        "I am reading a book.",
-        "How are you?",
-        "I am fine, thank you.",
-        "How do you go to school?",
-        "I go to school by train.",
-        "Where is the pen?",
-        "It is behind the book.",
-        "Where is your grandmother?",
-        "She is at home.",
-        "Why do you like strawberries?",
-        "Because they are sweet.",
-        "Which one is different?",
-        "This one is different.",
-        "What color is your pen?",
-        "It is purple.",
-        "Do you have a blue pen?",
-        "Yes, I do.",
-        "No, I don't.",
-        "What can we use fire for?",
-        "We can use fire to cook food.",
-        "What do you do?",
-        "I am a student.",
-        "What does a doctor do?",
-        "A doctor helps people.",
-        "What is in the bucket?",
-        "The bucket is empty.",
-        "Is the towel clean?",
-        "Yes, it is clean.",
-        "Is your hand dirty?",
-        "No, it is clean.",
-        "What can you see in the sky?",
-        "Where is the ship?",
-        "The ship is on the sea.",
-        "Where is the train?",
-        "The train is on the land.",
+        "What do you like?",
+        "What do you want?",
+        "What is in the bag?",
+        "What is on the table?",
+        "What does a [animal] say?",
+        "What is your name?",
         "What do you do in the morning?",
-        "I brush my teeth in the morning.",
-        "What do you do in the evening?",
-        "I watch TV in the evening.",
+        "Where is the [object]?",
+        "Where is your bag?",
+        "Where is the toy?",
+        "Where is the pen?",
+        "Where is Mom?",
+        "Where is Dad?",
+        "Where is the ship?",
+        "Where is the train?",
+        "Who is he?",
+        "Who is she?",
+        "Who is this?",
+        "Who is your teacher?",
+        "Who helps people?",
+        "Who is happy?",
+        "When do you wake up?",
+        "When do you brush your teeth?",
+        "When do you go to school?",
+        "When do you have a bath?",
+        "When do you sleep?",
+        "When do you say good night?",
+        "How are you?",
+        "How are you today?",
+        "How do you feel?",
+        "How do you go to school?",
+        "How many books are there?",
         "How many stars do you get?",
-        "I get 7 stars.",
+        "How many apples do you have?",
+        "How much is it?",
+        "How much water do you want?",
+        "How does it taste?",
+        "Are you hungry?",
+        "Are you thirsty?",
+        "Do you like apples?",
+        "Do you have a blue pen?",
+        "Can you swim?",
+        "Can a bird fly?",
+        "Which one is different?",
+        "Which one is heavy?",
         "Which one is full?",
-        "Which one is empty?"
+        "Good morning, Mom.",
+        "Good night, Dad.",
+        "Thank you.",
+        "You are welcome.",
+        "Excuse me.",
+        "Sorry.",
+        "I am hungry.",
+        "I am thirsty.",
+        "I want this.",
+        "Let us go.",
+        "Let us read a book.",
+        "Let us draw a picture."
       ];
 
       const existingWords = new Set(vocabulary.map((item) => item.word.toLowerCase()));
@@ -229,13 +262,8 @@
         }
       });
 
-      const existingCommands = new Set(parentCommands);
-      extraCommands.forEach((command) => {
-        if (!existingCommands.has(command)) {
-          parentCommands.push(command);
-          existingCommands.add(command);
-        }
-      });
+      parentCommands.length = 0;
+      parentCommands.push(...replacementCommands);
 
       startQuiz = function startQuizWithFortyQuestions(words, label, mode = "text") {
         quizWords = shuffle(words).slice(0, quizSize);
