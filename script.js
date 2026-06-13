@@ -256,8 +256,6 @@ const vocabulary = [
 ];
 
 const quizQuestionCount = 40;
-const voiceSettingsKey = "bellaEnglishReviewVoice";
-
 const parentCommands = [
   "Run.",
   "Stop.",
@@ -359,9 +357,6 @@ const categoryButtons = document.querySelector("#categoryButtons");
 const summaryTitle = document.querySelector("#summaryTitle");
 const summaryList = document.querySelector("#summaryList");
 const commandText = document.querySelector("#commandText");
-const voiceSelect = document.querySelector("#voiceSelect");
-const voiceTestButton = document.querySelector("#voiceTestButton");
-
 let quizWords = [];
 let quizMode = "text";
 let currentQuestion = null;
@@ -482,13 +477,10 @@ function chooseBestVoice() {
 
 function loadEnglishVoices() {
   if (!("speechSynthesis" in window)) {
-    voiceSelect.innerHTML = "<option>Speech not supported</option>";
-    voiceSelect.disabled = true;
-    voiceTestButton.disabled = true;
+    selectedVoice = null;
     return;
   }
 
-  const savedVoiceName = localStorage.getItem(voiceSettingsKey);
   englishVoices = window.speechSynthesis
     .getVoices()
     .filter((voice) => {
@@ -497,33 +489,7 @@ function loadEnglishVoices() {
     })
     .sort((a, b) => voiceScore(b) - voiceScore(a));
 
-  voiceSelect.innerHTML = "";
-
-  if (englishVoices.length === 0) {
-    const option = document.createElement("option");
-    option.textContent = "Default English Voice";
-    option.value = "";
-    voiceSelect.appendChild(option);
-    selectedVoice = null;
-    return;
-  }
-
-  englishVoices.forEach((voice, index) => {
-    const option = document.createElement("option");
-    option.value = voice.name;
-    option.textContent = `${voice.name} (${voice.lang})${index === 0 ? " ★" : ""}`;
-    voiceSelect.appendChild(option);
-  });
-
-  selectedVoice = englishVoices.find((voice) => voice.name === savedVoiceName) || chooseBestVoice();
-  voiceSelect.value = selectedVoice?.name || "";
-}
-
-function setSelectedVoice(name) {
-  selectedVoice = englishVoices.find((voice) => voice.name === name) || chooseBestVoice();
-  if (selectedVoice) {
-    localStorage.setItem(voiceSettingsKey, selectedVoice.name);
-  }
+  selectedVoice = chooseBestVoice();
 }
 
 function getProgress() {
@@ -731,13 +697,6 @@ document.querySelector("#commandListenButton").addEventListener("click", () => {
 });
 
 document.querySelector("#nextCommandButton").addEventListener("click", showRandomCommand);
-voiceSelect.addEventListener("change", () => {
-  setSelectedVoice(voiceSelect.value);
-  speak("Hello Bella. Let's practice English.");
-});
-voiceTestButton.addEventListener("click", () => {
-  speak("Hello Bella. This English voice is clear and slow.");
-});
 
 buildCategoryButtons();
 loadEnglishVoices();
