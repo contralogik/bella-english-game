@@ -33,7 +33,8 @@ const vocabulary = [
     ["watch TV", "看电视", "📺"],
     ["see", "看见", "👀"],
     ["move", "移动", "➡️"],
-    ["work", "工作", "💼"]
+    ["work", "工作", "💼"],
+    ["find", "找到；发现", "🔎"]
   ]),
   ...makeWords("Colors", [
     ["red", "红色", "🔴"],
@@ -42,7 +43,8 @@ const vocabulary = [
     ["white", "白色", "⚪"],
     ["orange", "橙色", "🟠"],
     ["green", "绿色", "🟢"],
-    ["black", "黑色", "⚫"]
+    ["black", "黑色", "⚫"],
+    ["brown", "棕色", "🟤"]
   ]),
   ...makeWords("Home Objects", [
     ["table", "桌子", "🍽️"],
@@ -73,7 +75,8 @@ const vocabulary = [
     ["happy", "开心的", "😊"],
     ["sad", "难过的", "😢"],
     ["tired", "累的", "😴"],
-    ["angry", "生气的", "😠"]
+    ["angry", "生气的", "😠"],
+    ["scared", "害怕的", "😨"]
   ]),
   ...makeWords("Food", [
     ["water", "水", "💧"],
@@ -88,7 +91,8 @@ const vocabulary = [
     ["tomato", "西红柿", "🍅"],
     ["food", "食物", "🍽️"],
     ["cake", "蛋糕", "🍰"],
-    ["egg", "鸡蛋", "🥚"]
+    ["egg", "鸡蛋", "🥚"],
+    ["pear", "梨", "🍐"]
   ]),
   ...makeWords("Animals", [
     ["duck", "鸭子", "🦆"],
@@ -152,6 +156,7 @@ const vocabulary = [
     ["what do you do?", "你是做什么的？", "💼"],
     ["what can you see?", "你能看见什么？", "👀"],
     ["how are you?", "你好吗？", "😊"],
+    ["how old are you?", "你几岁了？", "🎂"],
     ["do you have a blue pen?", "你有一支蓝色钢笔吗？", "🖊️"],
     ["which one is different?", "哪一个不一样？", "☝️"],
     ["what can we use fire for?", "我们可以用火做什么？", "🔥"],
@@ -171,7 +176,8 @@ const vocabulary = [
     ["sleep", "睡觉", "🛌"],
     ["like", "喜欢", "💗"],
     ["can", "能；会", "💪"],
-    ["help", "帮助", "🤝"]
+    ["help", "帮助", "🤝"],
+    ["raise your hand", "举手", "🙋"]
   ]),
   ...makeWords("Position Words", [
     ["in", "在里面", "📥"],
@@ -201,7 +207,8 @@ const vocabulary = [
     ["teacher", "老师", "👩‍🏫"],
     ["friend", "朋友", "🧑‍🤝‍🧑"],
     ["name", "名字", "🏷️"],
-    ["doctor", "医生", "🧑‍⚕️"]
+    ["doctor", "医生", "🧑‍⚕️"],
+    ["chef", "厨师", "🧑‍🍳"]
   ]),
   ...makeWords("Clothes", [
     ["clothes", "衣服", "👕"],
@@ -220,7 +227,8 @@ const vocabulary = [
     ["moon", "月亮", "🌙"],
     ["river", "河流", "🏞️"],
     ["storm", "暴风雨", "⛈️"],
-    ["weather", "天气", "🌦️"]
+    ["weather", "天气", "🌦️"],
+    ["fire", "火", "🔥"]
   ]),
   ...makeWords("Transport", [
     ["ship", "船", "🚢"],
@@ -231,7 +239,10 @@ const vocabulary = [
   ...makeWords("Time", [
     ["morning", "早晨；上午", "🌅"],
     ["afternoon", "下午", "🌤️"],
-    ["evening", "晚上；傍晚", "🌆"]
+    ["evening", "晚上；傍晚", "🌆"],
+    ["day", "白天；一天", "☀️"],
+    ["night", "夜晚", "🌙"],
+    ["time", "时间", "⏰"]
   ]),
   ...makeWords("Art and Music", [
     ["music", "音乐", "🎵"]
@@ -251,7 +262,9 @@ const vocabulary = [
     ["I want this", "我想要这个", "☝️"],
     ["Let’s go", "我们走吧", "🚶"],
     ["I get 7 stars", "我得到了7颗星", "⭐"],
-    ["You have a purple pen", "你有一支紫色钢笔", "🖊️"]
+    ["You have a purple pen", "你有一支紫色钢笔", "🖊️"],
+    ["Welcome", "欢迎", "👋"],
+    ["Watch out", "小心", "⚠️"]
   ])
 ];
 
@@ -264,6 +277,8 @@ const parentCommands = [
   "Turn around.",
   "Sit down.",
   "Stand up.",
+  "Raise your hand.",
+  "Watch out!",
   "Touch your [body part].",
   "Show me your [body part].",
   "Point to the [object].",
