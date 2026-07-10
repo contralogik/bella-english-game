@@ -9,6 +9,13 @@
 - `script.js`：词汇数据、游戏逻辑、语音朗读和学习记录
 - `README.md`：项目说明
 
+## 数据来源
+
+- 运行中的唯一词库来源是 `script.js` 里的 `vocabulary` 和 `parentCommands`。
+- `Bella English 词汇短语总表.docx` 只作为人工查看或导出的参考文档，不作为网页运行数据源。
+- 更新词库时只改 `script.js`，避免 `index.html` 和 `script.js` 同时维护同一批数据造成发布不同步。
+- 页面启动时会自动检查重复词、缺中文、缺图片和未知分类，并在浏览器控制台输出提醒。
+
 ## 如何运行
 
 直接双击 `index.html` 即可在浏览器中运行。
@@ -22,6 +29,7 @@
 - Category Words 分类单词汇总：选择一个类别后，查看该类别全部词汇、中文意思和配图。
 - Parent Interaction 亲子互动：随机显示适合小学生日常互动的英文短语，不判断对错。
 - Progress 学习进度：使用 `localStorage` 保存总练习次数、总答题数和总正确数。
+- 学习记录带有 `schemaVersion` 和版本号；旧版记录会自动迁移并保留统计数据。
 - 语音朗读：使用浏览器 `speechSynthesis`，优先选择 en-US/en-GB 的自然英文语音，语速为 0.85，并支持 `phoneticHint` 优化易读错单词。
 - 答错会显示 `Try again!`，然后进入下一题；答错题目不会计入正确数。
 

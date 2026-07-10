@@ -1,5 +1,8 @@
 "use strict";
 
+const appVersion = "2026.07.11";
+const progressStorageSchemaVersion = 2;
+
 // Vocabulary is kept in JavaScript arrays so the game works offline.
 // The picture field uses emoji as built-in visual cards, avoiding images, APIs, or CDNs.
 const vocabulary = [
@@ -353,6 +356,32 @@ const parentCommands = [
   "Let us draw a picture."
 ];
 
+const allowedCategories = [
+  "Actions",
+  "Colors",
+  "Home Objects",
+  "Outdoor",
+  "Feelings",
+  "Food",
+  "Animals",
+  "Temperature",
+  "Body Parts",
+  "Pronouns",
+  "Family",
+  "Questions",
+  "Daily Instructions",
+  "Position Words",
+  "Adjectives",
+  "People",
+  "Clothes",
+  "Nature",
+  "Transport",
+  "Time",
+  "Art and Music",
+  "Common Words",
+  "Daily Phrases"
+];
+
 const progressKey = "bellaEnglishReviewProgress";
 const screens = document.querySelectorAll(".screen");
 const homeScreen = document.querySelector("#homeScreen");
@@ -372,6 +401,7 @@ const categoryButtons = document.querySelector("#categoryButtons");
 const summaryTitle = document.querySelector("#summaryTitle");
 const summaryList = document.querySelector("#summaryList");
 const commandText = document.querySelector("#commandText");
+const appVersionLabel = document.querySelector("#appVersion");
 let quizWords = [];
 let quizMode = "text";
 let currentQuestion = null;
@@ -389,6 +419,36 @@ function makeWords(category, rows) {
     picture,
     phoneticHint
   }));
+}
+
+function validateDataIntegrity() {
+  const issues = [];
+  const seenWords = new Set();
+  const categorySet = new Set(allowedCategories);
+
+  vocabulary.forEach((item, index) => {
+    const word = String(item.word || "").trim();
+    const key = word.toLowerCase();
+
+    if (!word) issues.push(`Vocabulary row ${index + 1} is missing word.`);
+    if (!String(item.chinese || "").trim()) issues.push(`${word || `Row ${index + 1}`} is missing Chinese.`);
+    if (!String(item.picture || "").trim()) issues.push(`${word || `Row ${index + 1}`} is missing picture.`);
+    if (!categorySet.has(item.category)) issues.push(`${word || `Row ${index + 1}`} has unknown category: ${item.category}`);
+    if (key && seenWords.has(key)) issues.push(`Duplicate vocabulary word: ${word}`);
+    seenWords.add(key);
+  });
+
+  parentCommands.forEach((command, index) => {
+    if (!String(command || "").trim()) {
+      issues.push(`Parent command ${index + 1} is empty.`);
+    }
+  });
+
+  if (issues.length > 0) {
+    console.warn("Bella English data check found issues:", issues);
+  }
+
+  return issues;
 }
 
 function showScreen(screenToShow) {
@@ -509,19 +569,64 @@ function loadEnglishVoices() {
 
 function getProgress() {
   const saved = localStorage.getItem(progressKey);
-  return saved ? JSON.parse(saved) : {
-    totalSessions: 0,
-    totalQuestions: 0,
-    totalCorrect: 0
-  };
+  if (!saved) {
+    return createEmptyProgress();
+  }
+
+  try {
+    const progress = migrateProgress(JSON.parse(saved));
+    if (saved !== JSON.stringify(progress)) {
+      saveProgress(progress);
+    }
+    return progress;
+  } catch (error) {
+    localStorage.setItem(`${progressKey}Backup`, saved);
+    const progress = createEmptyProgress();
+    saveProgress(progress);
+    return progress;
+  }
 }
 
 function saveProgress(progress) {
   localStorage.setItem(progressKey, JSON.stringify(progress));
 }
 
+function createEmptyProgress() {
+  return {
+    schemaVersion: progressStorageSchemaVersion,
+    appVersion,
+    totalSessions: 0,
+    totalQuestions: 0,
+    totalCorrect: 0
+  };
+}
+
+function migrateProgress(savedProgress) {
+  const totalSessions = safeProgressNumber(savedProgress?.totalSessions);
+  const totalQuestions = safeProgressNumber(savedProgress?.totalQuestions);
+  const totalCorrect = Math.min(safeProgressNumber(savedProgress?.totalCorrect), totalQuestions);
+
+  return {
+    schemaVersion: progressStorageSchemaVersion,
+    appVersion,
+    totalSessions,
+    totalQuestions,
+    totalCorrect
+  };
+}
+
+function safeProgressNumber(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < 0) {
+    return 0;
+  }
+  return Math.floor(number);
+}
+
 function updateProgress(questionCount, correctCount) {
   const progress = getProgress();
+  progress.schemaVersion = progressStorageSchemaVersion;
+  progress.appVersion = appVersion;
   progress.totalSessions += 1;
   progress.totalQuestions += questionCount;
   progress.totalCorrect += correctCount;
@@ -664,6 +769,7 @@ function showProgress() {
   document.querySelector("#totalQuestions").textContent = progress.totalQuestions;
   document.querySelector("#totalCorrect").textContent = progress.totalCorrect;
   document.querySelector("#accuracyRate").textContent = `${accuracy}%`;
+  appVersionLabel.textContent = appVersion;
   showScreen(progressScreen);
 }
 
@@ -713,6 +819,8 @@ document.querySelector("#commandListenButton").addEventListener("click", () => {
 
 document.querySelector("#nextCommandButton").addEventListener("click", showRandomCommand);
 
+validateDataIntegrity();
+getProgress();
 buildCategoryButtons();
 loadEnglishVoices();
 if ("speechSynthesis" in window) {
