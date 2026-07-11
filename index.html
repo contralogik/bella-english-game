@@ -16,17 +16,11 @@
       </div>
 
       <div class="menu-grid">
-        <button class="menu-button coral" data-action="mixed" type="button">
-          Mixed Review<br><span>综合复习</span>
+        <button class="menu-button lesson-entry" data-action="lessons" type="button">
+          Story Lessons<br><span>情景对话课程 · 24 课完整版</span>
         </button>
-        <button class="menu-button sky" data-action="picture" type="button">
-          Picture Review<br><span>识图复习</span>
-        </button>
-        <button class="menu-button peach" data-action="listen-picture" type="button">
-          Listen &amp; Choose Picture<br><span>听声音，选择图片</span>
-        </button>
-        <button class="menu-button aqua" data-action="chinese-english" type="button">
-          Chinese to English<br><span>看中文，选择英文</span>
+        <button class="menu-button test-entry" data-action="tests" type="button">
+          Test Practice<br><span>测试练习 · 4 种模式</span>
         </button>
         <button class="menu-button mint" data-action="category" type="button">
           Category Words<br><span>分类单词汇总</span>
@@ -39,6 +33,29 @@
         </button>
         <button class="menu-button rose" data-action="mistakes" type="button">
           Mistake Book<br><span>错题集</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="testScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home" type="button">Home</button>
+        <h2>Test Practice</h2>
+      </header>
+      <p class="page-note">Choose one test mode to review Bella's words and phrases.</p>
+
+      <div class="menu-grid test-grid">
+        <button class="menu-button coral" data-action="mixed" type="button">
+          Mixed Review<br><span>综合复习</span>
+        </button>
+        <button class="menu-button sky" data-action="picture" type="button">
+          Picture Review<br><span>识图复习</span>
+        </button>
+        <button class="menu-button peach" data-action="listen-picture" type="button">
+          Listen &amp; Choose Picture<br><span>听声音，选择图片</span>
+        </button>
+        <button class="menu-button aqua" data-action="chinese-english" type="button">
+          Chinese to English<br><span>看中文，选择英文</span>
         </button>
       </div>
     </section>
@@ -122,8 +139,58 @@
         <strong id="accuracyRate">0%</strong>
       </div>
       <div class="progress-card">
+        <p>已完成情景课</p>
+        <strong id="completedLessons">0 / 24</strong>
+      </div>
+      <div class="progress-card">
         <p>版本</p>
         <strong id="appVersion">-</strong>
+      </div>
+    </section>
+
+    <section id="lessonListScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home" type="button">Home</button>
+        <h2>Story Lessons</h2>
+      </header>
+      <div class="lesson-intro">
+        <span class="lesson-intro-icon">🎬</span>
+        <div>
+          <strong>先听懂，再开口</strong>
+          <p>看情景、听对话、做选择，最后和角色说英语。</p>
+        </div>
+      </div>
+      <div id="lessonCards" class="lesson-cards"></div>
+    </section>
+
+    <section id="lessonScreen" class="screen">
+      <header class="top-bar lesson-top-bar">
+        <button class="small-button" data-action="lessons" type="button">Lessons</button>
+        <div id="lessonStepInfo" class="round-info">Story 1 / 8</div>
+      </header>
+
+      <div class="lesson-heading">
+        <p id="lessonStageLabel" class="category-label">Watch &amp; Listen</p>
+        <h2 id="lessonTitle">Good Morning</h2>
+      </div>
+
+      <div id="lessonScene" class="lesson-scene" aria-label="Lesson scene illustration"></div>
+
+      <div id="dialoguePanel" class="dialogue-panel">
+        <div id="speakerAvatar" class="speaker-avatar">👩</div>
+        <div class="dialogue-copy">
+          <strong id="speakerName">Mom</strong>
+          <p id="dialogueText">Good morning, Bella.</p>
+          <p id="dialogueChinese" class="dialogue-chinese">早上好，Bella。</p>
+        </div>
+      </div>
+
+      <div id="lessonOptions" class="lesson-options"></div>
+      <p id="lessonFeedback" class="feedback" aria-live="polite"></p>
+
+      <div id="lessonControls" class="lesson-controls">
+        <button id="lessonListenButton" class="listen-button" type="button">🔊 Listen</button>
+        <button id="lessonNextButton" class="primary-button lesson-next" type="button">Next →</button>
       </div>
     </section>
 

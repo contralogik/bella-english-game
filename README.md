@@ -24,6 +24,11 @@
 
 ## 功能
 
+- Story Lessons 情景对话课程：提供 24 课完整生活情景课，覆盖起床、早餐、刷牙、穿衣、上学、课堂、玩耍、公园、动物、方位、洗澡、睡前、雨天、看医生、超市、生日、海边和一天复盘。每课包含内嵌场景插画、逐句对话播放、听懂选择、角色扮演和现实亲子任务。
+- 课程画面和逻辑全部包含在现有 HTML/CSS/JavaScript 中，不依赖图片服务器、CDN 或外部 API；直接双击 `index.html` 仍可离线运行。
+- 学习记录会保存已完成情景课和每课最佳听力得分。
+- Test Practice 测试练习：把 Mixed Review、Picture Review、Listen & Choose Picture、Chinese to English 四个测试模式集中到一个测试页面，首页只保留一个测试入口。
+
 - Listen & Choose Picture：听英语发音，从 4 张图片中选择正确答案。
 - Chinese to English：看中文，从 4 个英文选项中选择正确答案。
 - 错题集：答错后自动记录单词和错误次数，可集中练习或清空。
