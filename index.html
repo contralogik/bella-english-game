@@ -22,6 +22,12 @@
         <button class="menu-button sky" data-action="picture" type="button">
           Picture Review<br><span>识图复习</span>
         </button>
+        <button class="menu-button peach" data-action="listen-picture" type="button">
+          Listen &amp; Choose Picture<br><span>听声音，选择图片</span>
+        </button>
+        <button class="menu-button aqua" data-action="chinese-english" type="button">
+          Chinese to English<br><span>看中文，选择英文</span>
+        </button>
         <button class="menu-button mint" data-action="category" type="button">
           Category Words<br><span>分类单词汇总</span>
         </button>
@@ -30,6 +36,9 @@
         </button>
         <button class="menu-button violet" data-action="progress" type="button">
           Progress<br><span>学习进度</span>
+        </button>
+        <button class="menu-button rose" data-action="mistakes" type="button">
+          Mistake Book<br><span>错题集</span>
         </button>
       </div>
     </section>
@@ -115,6 +124,19 @@
       <div class="progress-card">
         <p>版本</p>
         <strong id="appVersion">-</strong>
+      </div>
+    </section>
+
+    <section id="mistakesScreen" class="screen">
+      <header class="top-bar">
+        <button class="small-button" data-action="home" type="button">Home</button>
+        <h2>错题集</h2>
+      </header>
+      <p id="mistakesNote" class="page-note">答错的单词会自动收藏在这里。</p>
+      <div id="mistakesList" class="word-list"></div>
+      <div class="mistake-actions">
+        <button id="practiceMistakesButton" class="primary-button" type="button">练习错题</button>
+        <button id="clearMistakesButton" class="small-button danger-button" type="button">清空错题集</button>
       </div>
     </section>
   </main>

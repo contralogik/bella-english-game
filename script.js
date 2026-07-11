@@ -1,7 +1,7 @@
 "use strict";
 
-const appVersion = "2026.07.11";
-const progressStorageSchemaVersion = 2;
+const appVersion = "2026.07.11.2";
+const progressStorageSchemaVersion = 3;
 
 // Vocabulary is kept in JavaScript arrays so the game works offline.
 // The picture field uses emoji as built-in visual cards, avoiding images, APIs, or CDNs.
@@ -391,6 +391,7 @@ const categorySummaryScreen = document.querySelector("#categorySummaryScreen");
 const commandScreen = document.querySelector("#commandScreen");
 const resultScreen = document.querySelector("#resultScreen");
 const progressScreen = document.querySelector("#progressScreen");
+const mistakesScreen = document.querySelector("#mistakesScreen");
 const questionWord = document.querySelector("#questionWord");
 const categoryLabel = document.querySelector("#categoryLabel");
 const roundInfo = document.querySelector("#roundInfo");
@@ -597,7 +598,8 @@ function createEmptyProgress() {
     appVersion,
     totalSessions: 0,
     totalQuestions: 0,
-    totalCorrect: 0
+    totalCorrect: 0,
+    mistakes: {}
   };
 }
 
@@ -611,8 +613,17 @@ function migrateProgress(savedProgress) {
     appVersion,
     totalSessions,
     totalQuestions,
-    totalCorrect
+    totalCorrect,
+    mistakes: normalizeMistakes(savedProgress?.mistakes)
   };
+}
+
+function normalizeMistakes(mistakes) {
+  if (!mistakes || typeof mistakes !== "object" || Array.isArray(mistakes)) return {};
+  const validWords = new Set(vocabulary.map((item) => item.word));
+  return Object.fromEntries(Object.entries(mistakes)
+    .filter(([word]) => validWords.has(word))
+    .map(([word, count]) => [word, Math.max(1, safeProgressNumber(count))]));
 }
 
 function safeProgressNumber(value) {
@@ -638,7 +649,7 @@ function startQuiz(words, label, mode = "text") {
   quizMode = mode;
   currentIndex = 0;
   score = 0;
-  categoryLabel.textContent = mode === "picture" ? "Picture Review" : label;
+  categoryLabel.textContent = label;
   showScreen(quizScreen);
   showQuestion();
 }
@@ -647,24 +658,32 @@ function showQuestion() {
   answered = false;
   feedback.textContent = "";
   currentQuestion = quizWords[currentIndex];
-  questionWord.textContent = currentQuestion.word;
+  questionWord.classList.toggle("question-prompt", quizMode === "chinese-english");
+  questionWord.textContent = quizMode === "listen-picture"
+    ? "🔊 Listen and choose"
+    : quizMode === "chinese-english" ? currentQuestion.chinese : currentQuestion.word;
   roundInfo.textContent = `${currentIndex + 1} / ${quizWords.length}`;
   optionsArea.innerHTML = "";
 
-  const wrongChoices = shuffle(vocabulary.filter((item) => item.word !== currentQuestion.word)).slice(0, 3);
+  const choicePool = quizMode === "picture" || quizMode === "listen-picture"
+    ? vocabulary.filter((item) => item.word !== currentQuestion.word && item.picture !== currentQuestion.picture)
+    : vocabulary.filter((item) => item.word !== currentQuestion.word);
+  const wrongChoices = shuffle(choicePool).slice(0, 3);
   const choices = shuffle([currentQuestion, ...wrongChoices]);
 
   choices.forEach((choice) => {
     const button = document.createElement("button");
-    button.className = quizMode === "picture" ? "option-button picture-button" : "option-button";
+    button.className = quizMode === "picture" || quizMode === "listen-picture" ? "option-button picture-button" : "option-button";
     button.dataset.word = choice.word;
 
-    if (quizMode === "picture") {
+    if (quizMode === "picture" || quizMode === "listen-picture") {
       button.innerHTML = `
         <span class="picture-symbol">${choice.picture}</span>
         <span class="picture-label">${choice.chinese}</span>
       `;
       button.setAttribute("aria-label", `${choice.chinese} ${choice.picture}`);
+    } else if (quizMode === "chinese-english") {
+      button.textContent = choice.word;
     } else {
       button.textContent = choice.chinese;
     }
@@ -672,6 +691,8 @@ function showQuestion() {
     button.addEventListener("click", () => checkAnswer(button, choice));
     optionsArea.appendChild(button);
   });
+
+  if (quizMode === "listen-picture") setTimeout(() => speak(currentQuestion), 180);
 }
 
 function checkAnswer(button, choice) {
@@ -687,6 +708,7 @@ function checkAnswer(button, choice) {
     feedback.textContent = "Good job!";
     setTimeout(nextQuestion, 850);
   } else {
+    recordMistake(currentQuestion.word);
     button.classList.add("wrong");
     showCorrectAnswer();
     feedback.textContent = "Try again!";
@@ -716,6 +738,27 @@ function finishQuiz() {
   updateProgress(quizWords.length, score);
   scoreText.textContent = `Score: ${score} / ${quizWords.length}`;
   showScreen(resultScreen);
+}
+
+function showMistakes() {
+  const progress = getProgress();
+  const entries = Object.entries(progress.mistakes)
+    .map(([word, count]) => ({ item: vocabulary.find((entry) => entry.word === word), count }))
+    .filter((entry) => entry.item)
+    .sort((a, b) => b.count - a.count);
+  const list = document.querySelector("#mistakesList");
+  const note = document.querySelector("#mistakesNote");
+  list.innerHTML = "";
+  note.textContent = entries.length ? `共有 ${entries.length} 个需要再练习的单词。` : "太棒了，错题集现在是空的！";
+  entries.forEach(({ item, count }) => {
+    const card = document.createElement("div");
+    card.className = "word-card";
+    card.innerHTML = `<span class="word-picture">${item.picture}</span><span class="word-text"><strong>${item.word}</strong><span>${item.chinese}</span></span><span class="mistake-count">错 ${count} 次</span>`;
+    list.appendChild(card);
+  });
+  document.querySelector("#practiceMistakesButton").disabled = entries.length === 0;
+  document.querySelector("#clearMistakesButton").disabled = entries.length === 0;
+  showScreen(mistakesScreen);
 }
 
 function buildCategoryButtons() {
@@ -773,6 +816,12 @@ function showProgress() {
   showScreen(progressScreen);
 }
 
+function recordMistake(word) {
+  const progress = getProgress();
+  progress.mistakes[word] = (progress.mistakes[word] || 0) + 1;
+  saveProgress(progress);
+}
+
 document.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
   const speakText = event.target.closest("[data-speak]")?.dataset.speak;
@@ -793,6 +842,14 @@ document.addEventListener("click", (event) => {
     startQuiz(vocabulary, "Picture Review", "picture");
   }
 
+  if (action === "listen-picture") {
+    startQuiz(vocabulary, "Listen & Choose Picture", "listen-picture");
+  }
+
+  if (action === "chinese-english") {
+    startQuiz(vocabulary, "Chinese to English", "chinese-english");
+  }
+
   if (action === "category") {
     showScreen(categoryScreen);
   }
@@ -805,6 +862,22 @@ document.addEventListener("click", (event) => {
   if (action === "progress") {
     showProgress();
   }
+
+  if (action === "mistakes") showMistakes();
+});
+
+document.querySelector("#practiceMistakesButton").addEventListener("click", () => {
+  const progress = getProgress();
+  const words = vocabulary.filter((item) => progress.mistakes[item.word]);
+  if (words.length) startQuiz(words, "Mistake Practice", "chinese-english");
+});
+
+document.querySelector("#clearMistakesButton").addEventListener("click", () => {
+  if (!window.confirm("确定要清空全部错题吗？")) return;
+  const progress = getProgress();
+  progress.mistakes = {};
+  saveProgress(progress);
+  showMistakes();
 });
 
 document.querySelector("#listenButton").addEventListener("click", () => {

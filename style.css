@@ -124,6 +124,10 @@ h1 {
   background: #cdb7ff;
 }
 
+.peach { background: #ffc98f; }
+.aqua { background: #83e5df; }
+.rose { background: #ffb7d5; }
+
 .top-bar {
   display: flex;
   align-items: center;
@@ -309,6 +313,11 @@ h1 {
   font-size: 1.6rem;
 }
 
+.question-prompt { font-size: clamp(1.8rem, 8vw, 3rem); }
+.mistake-actions { display: grid; gap: 12px; margin-top: 18px; }
+.danger-button { width: 100%; color: #9b2736; background: #ffe0e5; }
+.mistake-count { color: #ff647c; font-weight: 900; }
+
 @media (min-width: 460px) {
   .menu-grid,
   .options-area,
@@ -317,7 +326,8 @@ h1 {
     grid-template-columns: 1fr 1fr;
   }
 
-  .menu-grid .violet {
+  .menu-grid .violet,
+  .menu-grid .rose {
     grid-column: 1 / -1;
   }
 }
