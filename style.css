@@ -286,6 +286,22 @@ h1 {
 .lesson-option.correct { background: #bde978; border-color: #8aca38; }
 .lesson-option.wrong { background: #ffb0a6; border-color: #ff7a7a; }
 
+.oral-word-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 16px;
+  text-align: left;
+  background: #fffdf4;
+  border: 3px solid #ffd36a;
+  border-radius: 18px;
+}
+
+.oral-word-card > span { grid-row: 1 / 3; font-size: 2.5rem; text-align: center; }
+.oral-word-card strong { font-size: 1.25rem; }
+.oral-word-card small { color: #60708c; font-size: 0.96rem; font-weight: 800; }
+
 .lesson-controls { display: grid; grid-template-columns: 1fr 1.25fr; gap: 12px; margin-top: 14px; }
 .lesson-controls .listen-button, .lesson-controls .primary-button { width: 100%; min-width: 0; margin: 0; }
 .lesson-finish-card { margin: 28px 18px; padding: 18px; text-align: center; background: rgba(255,255,255,.9); border-radius: 18px; }
