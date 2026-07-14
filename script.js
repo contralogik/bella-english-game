@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.14.5";
+const appVersion = "2026.07.14.6";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",

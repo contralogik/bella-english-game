@@ -3,36 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bella English Review Game</title>
+  <title>贝拉英文冒险</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
     <section id="homeScreen" class="screen active">
       <div class="hero">
-        <p class="badge">English time</p>
-        <h1>Bella English Review Game</h1>
-        <h2>贝拉英语复习小游戏</h2>
+        <div class="hero-copy">
+          <p class="badge">LET'S EXPLORE</p>
+          <h1>贝拉英文冒险</h1>
+          <h2>Bella's English Adventure</h2>
+          <p class="hero-tip">今天也一起勇敢开口说英语吧！</p>
+        </div>
+        <div class="hero-portrait" aria-hidden="true">
+          <span class="hero-sparkle sparkle-one">✦</span>
+          <span class="hero-sparkle sparkle-two">✦</span>
+          <img src="assets/bella-adventure-portrait.png" alt="">
+        </div>
       </div>
 
       <div class="menu-grid">
         <button class="menu-button lesson-entry" data-action="lessons" type="button">
-          Story Lessons<br><span>情景对话课程 · 24 课完整版</span>
+          <span class="menu-icon" aria-hidden="true">🎬</span>
+          <span class="menu-copy"><strong>Story Lessons</strong><small>情景课程 · 24 课</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
         <button class="menu-button test-entry" data-action="tests" type="button">
-          Test Practice<br><span>测试练习 · 4 种模式</span>
+          <span class="menu-icon" aria-hidden="true">🎯</span>
+          <span class="menu-copy"><strong>Test Practice</strong><small>测试练习 · 4 种模式</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
         <button class="menu-button mint" data-action="category" type="button">
-          Category Words<br><span>分类单词汇总</span>
+          <span class="menu-icon" aria-hidden="true">📚</span>
+          <span class="menu-copy"><strong>Category Words</strong><small>分类单词汇总</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
         <button class="menu-button lime" data-action="command" type="button">
-          Parent Interaction<br><span>亲子互动</span>
+          <span class="menu-icon" aria-hidden="true">🤝</span>
+          <span class="menu-copy"><strong>Parent Interaction</strong><small>亲子互动</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
         <button class="menu-button violet" data-action="progress" type="button">
-          Progress<br><span>学习进度</span>
+          <span class="menu-icon" aria-hidden="true">🏆</span>
+          <span class="menu-copy"><strong>Progress</strong><small>学习进度</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
         <button class="menu-button rose" data-action="mistakes" type="button">
-          Mistake Book<br><span>错题集</span>
+          <span class="menu-icon" aria-hidden="true">🔎</span>
+          <span class="menu-copy"><strong>Mistake Book</strong><small>错题集</small></span>
+          <span class="menu-arrow" aria-hidden="true">›</span>
         </button>
       </div>
     </section>

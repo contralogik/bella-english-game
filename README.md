@@ -1,4 +1,6 @@
-# Bella English Review Game
+# 贝拉英文冒险
+
+Bella's English Adventure 是为 Bella 设计的儿童英语复习与情景学习小游戏。
 
 Lessons 1–6 now play their local vertical MP4 videos in the Watch & Listen stage. Each lesson continues to its existing vocabulary, listening, and speaking activities after the video.
 
