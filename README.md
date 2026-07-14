@@ -2,6 +2,8 @@
 
 Bella's English Adventure 是为 Bella 设计的儿童英语复习与情景学习小游戏。
 
+目前第 1 至第 12 课情景课程支持本地 MP4 视频播放。
+
 Lessons 1–6 now play their local vertical MP4 videos in the Watch & Listen stage. Each lesson continues to its existing vocabulary, listening, and speaking activities after the video.
 
 一个简单的儿童英语启蒙复习小游戏，适合 8 岁小朋友练习听懂、识别和参与互动。

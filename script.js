@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.14.6";
+const appVersion = "2026.07.14.7";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",
@@ -25,6 +25,30 @@ const lessonVideos = {
   "on-the-way": {
     src: "assets/lesson-06-on-the-way.mp4",
     label: "Lesson 6 On the Way"
+  },
+  "classroom-hello": {
+    src: "assets/lesson-07-classroom-hello.mp4",
+    label: "Lesson 7 Classroom Hello"
+  },
+  "raise-your-hand": {
+    src: "assets/lesson-08-raise-your-hand.mp4",
+    label: "Lesson 8 Raise Your Hand"
+  },
+  "colors-and-toys": {
+    src: "assets/lesson-09-colors-and-toys.mp4",
+    label: "Lesson 9 Colors and Toys"
+  },
+  "snack-time": {
+    src: "assets/lesson-10-snack-time.mp4",
+    label: "Lesson 10 Snack Time"
+  },
+  "feelings-check": {
+    src: "assets/lesson-11-feelings-check.mp4",
+    label: "Lesson 11 Feelings Check"
+  },
+  "playground-fun": {
+    src: "assets/lesson-12-playground-fun.mp4",
+    label: "Lesson 12 Playground Fun"
   }
 };
 const progressStorageSchemaVersion = 4;

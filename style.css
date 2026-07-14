@@ -702,16 +702,19 @@ h1 {
 }
 
 #homeScreen .menu-copy strong {
-  font-size: 1rem;
+  color: #202b46;
+  font-size: 1.08rem;
   line-height: 1.08;
   overflow-wrap: anywhere;
 }
 
 #homeScreen .menu-copy small {
   color: #45536c;
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 900;
+  letter-spacing: 0;
   line-height: 1.3;
+  white-space: nowrap;
 }
 
 #homeScreen .menu-arrow {
@@ -739,6 +742,10 @@ h1 {
 
 #homeScreen .lesson-entry .menu-copy small,
 #homeScreen .lesson-entry .menu-arrow {
+  color: #ffffff;
+}
+
+#homeScreen .lesson-entry .menu-copy strong {
   color: #ffffff;
 }
 
@@ -773,8 +780,8 @@ h1 {
 
   #homeScreen .menu-icon { width: 42px; height: 42px; font-size: 1.45rem; }
   #homeScreen .menu-arrow { display: none; }
-  #homeScreen .menu-copy strong { font-size: 0.92rem; }
-  #homeScreen .menu-copy small { font-size: 0.72rem; }
+  #homeScreen .menu-copy strong { font-size: 1rem; }
+  #homeScreen .menu-copy small { font-size: 0.66rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
