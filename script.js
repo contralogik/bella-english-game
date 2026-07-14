@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.15.1";
+const appVersion = "2026.07.15.2";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",
@@ -63,6 +63,7 @@ const lessonVideos = {
     label: "Lesson 15 Where Is It"
   }
 };
+const lessonVideoPlaybackRate = 0.85;
 const progressStorageSchemaVersion = 4;
 
 // Vocabulary is kept in JavaScript arrays so the game works offline.
@@ -1306,7 +1307,16 @@ function playLessonVideo() {
   const video = lessonScene.querySelector("video");
   if (!video) return;
   video.currentTime = 0;
+  applyLessonVideoPlaybackRate(video);
   video.play().catch(() => {});
+}
+
+function applyLessonVideoPlaybackRate(video) {
+  video.defaultPlaybackRate = lessonVideoPlaybackRate;
+  video.playbackRate = lessonVideoPlaybackRate;
+
+  if ("preservesPitch" in video) video.preservesPitch = true;
+  if ("webkitPreservesPitch" in video) video.webkitPreservesPitch = true;
 }
 
 function renderLessonVideo() {
@@ -1315,7 +1325,7 @@ function renderLessonVideo() {
   lessonStageLabel.textContent = "Watch & Listen · 看情景听对话";
   lessonStepInfo.textContent = "Video 1 / 1";
   dialoguePanel.hidden = true;
-  lessonListenButton.textContent = "🔊 Replay video";
+  lessonListenButton.textContent = "🔊 Replay · 0.85×";
   lessonNextButton.textContent = "Start key words →";
   lessonScene.className = "lesson-scene lesson-video-scene";
   lessonScene.innerHTML = `
@@ -1324,6 +1334,7 @@ function renderLessonVideo() {
       Your browser cannot play this video.
     </video>`;
   const video = lessonScene.querySelector("video");
+  applyLessonVideoPlaybackRate(video);
   video.addEventListener("ended", () => {
     if (!usesLessonVideo()) return;
     lessonStage = "words";
