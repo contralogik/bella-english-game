@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.14.4";
+const appVersion = "2026.07.14.5";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",
@@ -21,6 +21,10 @@ const lessonVideos = {
   "school-bag": {
     src: "assets/lesson-05-school-bag.mp4",
     label: "Lesson 5 School Bag"
+  },
+  "on-the-way": {
+    src: "assets/lesson-06-on-the-way.mp4",
+    label: "Lesson 6 On the Way"
   }
 };
 const progressStorageSchemaVersion = 4;
