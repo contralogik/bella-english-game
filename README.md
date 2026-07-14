@@ -1,6 +1,6 @@
 # Bella English Review Game
 
-Lesson 2 (`Breakfast Time`) now plays `assets/lesson-02-breakfast-time.mp4` in its Watch & Listen stage. The lesson continues to its existing vocabulary, listening, and speaking activities after the video.
+Lessons 1–4 now play their local vertical MP4 videos in the Watch & Listen stage. Each lesson continues to its existing vocabulary, listening, and speaking activities after the video.
 
 一个简单的儿童英语启蒙复习小游戏，适合 8 岁小朋友练习听懂、识别和参与互动。
 
