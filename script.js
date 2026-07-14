@@ -1,6 +1,16 @@
 "use strict";
 
-const appVersion = "2026.07.14.1";
+const appVersion = "2026.07.14.2";
+const lessonVideos = {
+  "good-morning": {
+    src: "assets/lesson-01-good-morning.mp4",
+    label: "Lesson 1 Good Morning"
+  },
+  "breakfast-time": {
+    src: "assets/lesson-02-breakfast-time.mp4",
+    label: "Lesson 2 Breakfast Time"
+  }
+};
 const progressStorageSchemaVersion = 4;
 
 // Vocabulary is kept in JavaScript arrays so the game works offline.
@@ -734,6 +744,7 @@ const lessonStepInfo = document.querySelector("#lessonStepInfo");
 const lessonStageLabel = document.querySelector("#lessonStageLabel");
 const lessonTitle = document.querySelector("#lessonTitle");
 const lessonScene = document.querySelector("#lessonScene");
+const dialoguePanel = document.querySelector("#dialoguePanel");
 const speakerAvatar = document.querySelector("#speakerAvatar");
 const speakerName = document.querySelector("#speakerName");
 const dialogueText = document.querySelector("#dialogueText");
@@ -1218,14 +1229,56 @@ function renderLessonStage() {
   lessonOptions.innerHTML = "";
   lessonFeedback.textContent = "";
   lessonAnswered = false;
+  dialoguePanel.hidden = false;
   lessonListenButton.hidden = false;
   lessonNextButton.hidden = false;
 
-  if (lessonStage === "story") renderStoryLine();
+  if (lessonStage === "story" && usesLessonVideo()) renderLessonVideo();
+  if (lessonStage === "story" && !usesLessonVideo()) renderStoryLine();
   if (lessonStage === "words") renderLessonWord();
   if (lessonStage === "questions") renderLessonQuestion();
   if (lessonStage === "roleplay") renderRoleplay();
   if (lessonStage === "complete") renderLessonComplete();
+}
+
+function usesLessonVideo() {
+  return Boolean(getLessonVideo());
+}
+
+function getLessonVideo() {
+  if (lessonStage !== "story" || !activeLesson) return null;
+  return lessonVideos[activeLesson.id] || null;
+}
+
+function playLessonVideo() {
+  const video = lessonScene.querySelector("video");
+  if (!video) return;
+  video.currentTime = 0;
+  video.play().catch(() => {});
+}
+
+function renderLessonVideo() {
+  const lessonVideo = getLessonVideo();
+  if (!lessonVideo) return;
+  lessonStageLabel.textContent = "Watch & Listen · 看情景听对话";
+  lessonStepInfo.textContent = "Video 1 / 1";
+  dialoguePanel.hidden = true;
+  lessonListenButton.textContent = "🔊 Replay video";
+  lessonNextButton.textContent = "Start key words →";
+  lessonScene.className = "lesson-scene lesson-video-scene";
+  lessonScene.innerHTML = `
+    <video class="lesson-video" controls playsinline preload="metadata" aria-label="${lessonVideo.label} story video">
+      <source src="${lessonVideo.src}" type="video/mp4">
+      Your browser cannot play this video.
+    </video>`;
+  const video = lessonScene.querySelector("video");
+  video.addEventListener("ended", () => {
+    if (!usesLessonVideo()) return;
+    lessonStage = "words";
+    lessonItemIndex = 0;
+    renderLessonStage();
+  });
+  video.play().catch(() => {});
 }
 
 function renderLessonWord() {
@@ -1361,10 +1414,15 @@ function renderLessonComplete() {
 function advanceLesson() {
   if (!activeLesson) return;
   if (lessonStage === "story") {
-    lessonItemIndex += 1;
-    if (lessonItemIndex >= activeLesson.dialogue.length) {
+    if (usesLessonVideo()) {
       lessonStage = "words";
       lessonItemIndex = 0;
+    } else {
+      lessonItemIndex += 1;
+      if (lessonItemIndex >= activeLesson.dialogue.length) {
+        lessonStage = "words";
+        lessonItemIndex = 0;
+      }
     }
   } else if (lessonStage === "words") {
     lessonItemIndex += 1;
@@ -1485,6 +1543,10 @@ document.querySelector("#commandListenButton").addEventListener("click", () => {
 document.querySelector("#nextCommandButton").addEventListener("click", showRandomCommand);
 lessonListenButton.addEventListener("click", () => {
   if (!activeLesson) return;
+  if (usesLessonVideo()) {
+    playLessonVideo();
+    return;
+  }
   if (lessonStage === "story") speak(activeLesson.dialogue[lessonItemIndex].text);
   if (lessonStage === "words") speak(activeLesson.oralPractice[lessonItemIndex].model);
   if (lessonStage === "questions") speak(activeLesson.questions[lessonItemIndex].prompt);

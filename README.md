@@ -1,5 +1,7 @@
 # Bella English Review Game
 
+Lesson 2 (`Breakfast Time`) now plays `assets/lesson-02-breakfast-time.mp4` in its Watch & Listen stage. The lesson continues to its existing vocabulary, listening, and speaking activities after the video.
+
 一个简单的儿童英语启蒙复习小游戏，适合 8 岁小朋友练习听懂、识别和参与互动。
 
 ## 文件
@@ -23,6 +25,8 @@
 项目只使用 HTML、CSS 和 JavaScript，没有 React、Vue、后端、数据库、npm、登录系统或外部 API，可以离线运行。
 
 ## 功能
+
+- 第 1 课 `Good Morning` 的 Watch & Listen 阶段使用本地竖版 MP4 样片播放完整对话；播放结束后自动进入原有的重点词、听力选择和角色扮演流程。
 
 - Story Lessons 情景对话课程：提供 24 课完整生活情景课，覆盖起床、早餐、刷牙、穿衣、上学、课堂、玩耍、公园、动物、方位、洗澡、睡前、雨天、看医生、超市、生日、海边和一天复盘。课程按“生活基础→描述与提问→综合表达”由浅入深编排，完整覆盖当前 217 条复习词汇。
 - 每课新增 Key Words & Speak 重点词开口说阶段；每个重点词都配有一条适合儿童模仿的生活口语句，并保留场景对话、听力选择、角色扮演和现实亲子任务。
