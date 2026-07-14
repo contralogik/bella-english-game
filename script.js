@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.11.5";
+const appVersion = "2026.07.14.1";
 const progressStorageSchemaVersion = 4;
 
 // Vocabulary is kept in JavaScript arrays so the game works offline.
@@ -527,6 +527,99 @@ const storyLessons = createStoryLessons([
   }
 ]);
 
+// Every review word is assigned to at least one story lesson. The sequence moves
+// from concrete daily routines to descriptions, questions, and freer speech.
+const lessonVocabularyPlan = {
+  "good-morning": ["Good morning", "wake up", "morning", "bed", "window", "open", "happy", "tired", "stand", "how are you?", "every"],
+  "breakfast-time": ["water", "milk", "bread", "egg", "food", "eat", "drink", "delicious", "I’m hungry", "I’m thirsty", "table", "chair"],
+  "brush-teeth": ["brush teeth", "face", "nose", "mouth", "towel", "bucket", "clean", "dirty", "have a bath", "hand", "foot"],
+  "getting-dressed": ["clothes", "trousers", "socks", "shoe", "red", "blue", "yellow", "white", "put", "He is wearing a red shirt", "my", "your"],
+  "school-bag": ["bag", "book", "pen", "umbrella", "take", "give", "show", "in", "do you have a blue pen?", "You have a purple pen"],
+  "on-the-way": ["go", "walk", "street", "car", "bike", "bus", "train", "by train", "ship", "slow", "fast", "stop", "Watch out", "Let’s go"],
+  "classroom-hello": ["teacher", "friend", "name", "school", "building", "sit", "listen", "say", "raise your hand", "Welcome", "Excuse me"],
+  "raise-your-hand": ["learn", "write", "draw picture", "look", "see", "what can you see?", "can", "easy", "difficult", "perfect", "Thank you", "You’re welcome"],
+  "colors-and-toys": ["toy", "orange", "green", "black", "brown", "beautiful", "like", "play with", "what do you like?", "which", "which one is different?", "light", "heavy"],
+  "snack-time": ["apple", "banana", "strawberry", "fruit", "pear", "tomato", "sweet", "sour", "taste", "I want this", "how many"],
+  "feelings-check": ["sad", "angry", "scared", "help", "mother", "father", "sister", "brother", "grandmother", "he", "she", "her", "his", "who", "why", "Sorry"],
+  "playground-fun": ["run", "jump", "quick", "turn around", "throw", "move", "come", "what are you doing?", "tall", "short"],
+  "at-the-park": ["tree", "grass", "sky", "star", "soil", "leaf", "plant", "land", "river", "there is", "it is"],
+  "animal-sounds": ["dog", "cat", "duck", "chicken", "pig", "cow", "sheep", "horse", "rabbit", "bird", "fish", "fly", "swim", "what can it do?"],
+  "where-is-it": ["house", "door", "find", "on", "under", "behind", "where", "book", "toy", "pen", "close", "tiger", "lion", "snake", "monkey", "elephant"],
+  "bath-time": ["hot", "cold", "head", "eye", "ear", "clean", "dirty", "bucket", "towel", "have a bath", "hand", "foot"],
+  "story-time": ["music", "watch TV", "draw picture", "book", "look", "see", "rabbit", "what can you see?", "what"],
+  "good-night": ["sleep", "moon", "storm", "weather", "evening", "night", "Good night", "close", "door"],
+  "rainy-day": ["soil", "leaf", "plant", "river", "storm", "weather", "umbrella", "cold", "put", "go"],
+  "doctor-visit": ["doctor", "healthy", "how", "how old are you?", "help", "head", "mouth", "drink", "water"],
+  "supermarket": ["noodles", "rice", "tomato", "chef", "full", "empty", "what do you do?", "food", "take", "put"],
+  "birthday-party": ["cake", "friend", "sweet", "I get 7 stars", "Thank you", "beautiful", "happy"],
+  "at-the-beach": ["sea", "swim", "ship", "fire", "what can we use fire for?", "cold", "hot", "Watch out"],
+  "my-day-review": ["what", "heavy", "tall", "afternoon", "day", "time", "work", "what do you do?", "what are you doing?", "what do you like?", "I", "you"]
+};
+
+const oralSentenceOverrides = {
+  "come": "Come here, please.", "go": "Let’s go.", "turn around": "Turn around, please.",
+  "stop": "Stop, please.", "quick": "Be quick, please.", "fast": "I can run fast.",
+  "slow": "I can walk slowly.", "sit": "Sit down, please.", "stand": "Stand up, please.",
+  "look": "Look at this.", "listen": "Listen, please.", "throw": "Throw the ball, please.",
+  "say": "Say it again, please.", "wake up": "I wake up in the morning.",
+  "brush teeth": "I brush my teeth every morning.", "play with": "I play with my friend.",
+  "have a bath": "I have a bath in the evening.", "draw picture": "I can draw a picture.",
+  "watch TV": "I watch TV with my family.", "move": "Move the chair, please.",
+  "work": "My mother and father work.", "find": "I can find my book.",
+  "what": "What is it?", "where": "Where is my bag?", "why": "Why are you sad?",
+  "how": "How do you feel?", "who": "Who is she?", "how many": "How many apples are there?",
+  "which": "Which one do you like?", "there is": "There is a book on the table.",
+  "it is": "It is blue.", "give": "Give me the book, please.", "show": "Show me your picture, please.",
+  "take": "Take your bag, please.", "put": "Put the book on the table, please.",
+  "open": "Open the door, please.", "close": "Close the door, please.",
+  "eat": "I eat breakfast in the morning.", "drink": "I drink water every day.",
+  "sleep": "I sleep at night.", "like": "I like it.", "can": "I can do it.",
+  "help": "Can you help me, please?", "raise your hand": "Raise your hand, please.",
+  "in": "The book is in the bag.", "on": "The pen is on the table.",
+  "under": "The toy is under the chair.", "behind": "The bag is behind the door.",
+  "I": "I am Bella.", "you": "You are my friend.", "he": "He is my brother.",
+  "she": "She is my sister.", "my": "This is my book.", "your": "This is your pen.",
+  "her": "This is her bag.", "his": "This is his bike.",
+  "He is wearing a red shirt": "He is wearing a red shirt.",
+  "name": "My name is Bella.", "clothes": "These are my clothes.",
+  "trousers": "These are my trousers.", "socks": "These are my socks.",
+  "by train": "I go to school by train.", "morning": "Good morning.",
+  "afternoon": "Good afternoon.", "evening": "Good evening.", "day": "Have a good day.",
+  "night": "Good night.", "time": "What time is it?", "every": "I read every day."
+};
+
+function buildOralSentence(item) {
+  if (oralSentenceOverrides[item.word]) return oralSentenceOverrides[item.word];
+  if (/[?!.]$/.test(item.word)) return item.word.charAt(0).toUpperCase() + item.word.slice(1);
+  if (item.category === "Actions") return `I can ${item.word}.`;
+  if (item.category === "Colors") return `It is ${item.word}.`;
+  if (["Home Objects", "Clothes"].includes(item.category)) return `This is my ${item.word}.`;
+  if (["Outdoor", "Nature", "Transport"].includes(item.category)) return `I can see the ${item.word}.`;
+  if (item.category === "Feelings") return `I am ${item.word}.`;
+  if (item.category === "Food") return `I like ${item.word}.`;
+  if (item.category === "Animals") {
+    const article = /^[aeiou]/i.test(item.word) ? "an" : "a";
+    return `I can see ${article} ${item.word}.`;
+  }
+  if (item.category === "Temperature") return `It is ${item.word}.`;
+  if (item.category === "Body Parts") return `This is my ${item.word}.`;
+  if (item.category === "Family") return `This is my ${item.word}.`;
+  if (item.category === "Adjectives") return `It is ${item.word}.`;
+  if (item.category === "People") return `This is a ${item.word}.`;
+  if (item.category === "Time") return `It is ${item.word}.`;
+  if (item.category === "Art and Music") return `I like ${item.word}.`;
+  return `${item.word}.`;
+}
+
+storyLessons.forEach((lesson) => {
+  const plannedWords = lessonVocabularyPlan[lesson.id] || lesson.focus;
+  lesson.focus = plannedWords;
+  lesson.oralPractice = plannedWords.map((word) => {
+    const item = vocabulary.find((entry) => entry.word.toLowerCase() === word.toLowerCase());
+    return item ? { ...item, model: buildOralSentence(item) } : null;
+  }).filter(Boolean);
+});
+
 const sceneTemplates = {
   bedroom: { className: "scene-bedroom", place: "🪟", object: "🛏️", accent: "☀️" },
   breakfast: { className: "scene-breakfast", place: "☀️", object: "🥚 🥛 🍎", accent: "🍽️" },
@@ -701,6 +794,20 @@ function validateDataIntegrity() {
   }
 
   return issues;
+}
+
+function validateLessonVocabularyCoverage() {
+  const plannedWords = new Set(storyLessons.flatMap((lesson) => lesson.focus.map((word) => word.toLowerCase())));
+  const missing = vocabulary.filter((item) => !plannedWords.has(item.word.toLowerCase()));
+  const emptyLessons = storyLessons.filter((lesson) => !lesson.oralPractice.length);
+  if (missing.length || emptyLessons.length || storyLessons.length !== 24) {
+    console.warn("Bella lesson coverage check found issues:", {
+      lessonCount: storyLessons.length,
+      missingWords: missing.map((item) => item.word),
+      emptyLessons: emptyLessons.map((lesson) => lesson.id)
+    });
+  }
+  return { lessonCount: storyLessons.length, missingWords: missing, emptyLessons };
 }
 
 function showScreen(screenToShow) {
@@ -1115,9 +1222,25 @@ function renderLessonStage() {
   lessonNextButton.hidden = false;
 
   if (lessonStage === "story") renderStoryLine();
+  if (lessonStage === "words") renderLessonWord();
   if (lessonStage === "questions") renderLessonQuestion();
   if (lessonStage === "roleplay") renderRoleplay();
   if (lessonStage === "complete") renderLessonComplete();
+}
+
+function renderLessonWord() {
+  const item = activeLesson.oralPractice[lessonItemIndex];
+  lessonStageLabel.textContent = "Key Words & Speak · 重点词开口说";
+  lessonStepInfo.textContent = `Words ${lessonItemIndex + 1} / ${activeLesson.oralPractice.length}`;
+  speakerAvatar.textContent = item.picture;
+  speakerName.textContent = `${item.word} · ${item.chinese}`;
+  dialogueText.textContent = item.model;
+  dialogueChinese.textContent = "先听一遍，再大声跟读。";
+  dialogueChinese.classList.remove("hidden");
+  lessonOptions.innerHTML = `<div class="oral-word-card"><span>${item.picture}</span><strong>${item.word}</strong><small>${item.chinese}</small></div>`;
+  lessonNextButton.textContent = lessonItemIndex === activeLesson.oralPractice.length - 1 ? "Try listening →" : "I said it! →";
+  renderScene({ speaker: "Bella", prop: item.picture });
+  setTimeout(() => speak(item.model), 220);
 }
 
 function renderStoryLine() {
@@ -1240,6 +1363,12 @@ function advanceLesson() {
   if (lessonStage === "story") {
     lessonItemIndex += 1;
     if (lessonItemIndex >= activeLesson.dialogue.length) {
+      lessonStage = "words";
+      lessonItemIndex = 0;
+    }
+  } else if (lessonStage === "words") {
+    lessonItemIndex += 1;
+    if (lessonItemIndex >= activeLesson.oralPractice.length) {
       lessonStage = "questions";
       lessonItemIndex = 0;
     }
@@ -1357,12 +1486,14 @@ document.querySelector("#nextCommandButton").addEventListener("click", showRando
 lessonListenButton.addEventListener("click", () => {
   if (!activeLesson) return;
   if (lessonStage === "story") speak(activeLesson.dialogue[lessonItemIndex].text);
+  if (lessonStage === "words") speak(activeLesson.oralPractice[lessonItemIndex].model);
   if (lessonStage === "questions") speak(activeLesson.questions[lessonItemIndex].prompt);
   if (lessonStage === "roleplay") speak(activeLesson.roleplay[lessonItemIndex].prompt);
 });
 lessonNextButton.addEventListener("click", advanceLesson);
 
 validateDataIntegrity();
+validateLessonVocabularyCoverage();
 getProgress();
 buildCategoryButtons();
 buildLessonCards();
