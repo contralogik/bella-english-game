@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.14.7";
+const appVersion = "2026.07.15.1";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",
@@ -49,6 +49,18 @@ const lessonVideos = {
   "playground-fun": {
     src: "assets/lesson-12-playground-fun.mp4",
     label: "Lesson 12 Playground Fun"
+  },
+  "at-the-park": {
+    src: "assets/lesson-13-at-the-park.mp4",
+    label: "Lesson 13 At the Park"
+  },
+  "animal-sounds": {
+    src: "assets/lesson-14-animal-sounds.mp4",
+    label: "Lesson 14 Animal Sounds"
+  },
+  "where-is-it": {
+    src: "assets/lesson-15-where-is-it.mp4",
+    label: "Lesson 15 Where Is It"
   }
 };
 const progressStorageSchemaVersion = 4;
