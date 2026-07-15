@@ -2,7 +2,7 @@
 
 Bella's English Adventure 是为 Bella 设计的儿童英语复习与情景学习小游戏。
 
-目前第 1 至第 15 课情景课程支持本地 MP4 视频播放。
+目前第 1 至第 23 课情景课程支持本地 MP4 视频播放。
 课程视频默认以 0.85 倍速播放，并在浏览器支持时保持原音调。
 
 Lessons 1–6 now play their local vertical MP4 videos in the Watch & Listen stage. Each lesson continues to its existing vocabulary, listening, and speaking activities after the video.

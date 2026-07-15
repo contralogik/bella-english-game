@@ -1,6 +1,6 @@
 "use strict";
 
-const appVersion = "2026.07.15.2";
+const appVersion = "2026.07.15.3";
 const lessonVideos = {
   "good-morning": {
     src: "assets/lesson-01-good-morning.mp4",
@@ -61,6 +61,38 @@ const lessonVideos = {
   "where-is-it": {
     src: "assets/lesson-15-where-is-it.mp4",
     label: "Lesson 15 Where Is It"
+  },
+  "bath-time": {
+    src: "assets/lesson-16-bath-time.mp4",
+    label: "Lesson 16 Bath Time"
+  },
+  "story-time": {
+    src: "assets/lesson-17-story-time.mp4",
+    label: "Lesson 17 Story Time"
+  },
+  "good-night": {
+    src: "assets/lesson-18-good-night.mp4",
+    label: "Lesson 18 Good Night"
+  },
+  "rainy-day": {
+    src: "assets/lesson-19-rainy-day.mp4",
+    label: "Lesson 19 Rainy Day"
+  },
+  "doctor-visit": {
+    src: "assets/lesson-20-doctor-visit.mp4",
+    label: "Lesson 20 Doctor Visit"
+  },
+  "supermarket": {
+    src: "assets/lesson-21-supermarket.mp4",
+    label: "Lesson 21 Supermarket"
+  },
+  "birthday-party": {
+    src: "assets/lesson-22-birthday-party.mp4",
+    label: "Lesson 22 Birthday Party"
+  },
+  "at-the-beach": {
+    src: "assets/lesson-23-at-the-beach.mp4",
+    label: "Lesson 23 At the Beach"
   }
 };
 const lessonVideoPlaybackRate = 0.85;
